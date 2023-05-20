@@ -2,31 +2,17 @@ import 'package:http/http.dart' as http;
 import 'dart:developer';
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:romanime/control/models/scene_model.dart';
 import '../../constants.dart';
-import '../models/scene_meta_data.dart';
 import 'mock_data.dart';
-import '../models/scene_element_abstract_model.dart';
+
 
 void manageData(String jsonSceneData){
-  // print('/////////////////////////////// logging response //////////////////////////////////////////');
-  // log(jsonSceneData);
+
   final decodedData = json.decode(jsonSceneData);
-  SceneMetaData sceneMetaData = SceneMetaData.fromJson(
-    currentElement: decodedData['current_element'],
-    tagToIdMap: decodedData['element_stats']['all_tags'],
-    finalId: decodedData['ender'],
-    initialId: decodedData['starter'],
-  );
-  Map<String, dynamic> elementsMap = decodedData['elements'];
-  final List<SceneElementAbstractModel> sceneElements = [];
-  elementsMap.forEach((key, value) {
-    Map<String, dynamic> currentElementJson = elementsMap[key];
-    sceneElements.add(SceneElementAbstractModel.fromJson(currentElementJson));
-  });
-  print('////////////////////// printing scene metadata ///////////////////');
-  print(sceneMetaData);
-  print('////////////////////// printing scene elements ///////////////////');
-  sceneElements.forEach((element) {print(element);});
+  SceneModel scene = SceneModel.fromJson(decodedData);
+  log(scene.toString());
+
 }
 
 class ChatDataSource {

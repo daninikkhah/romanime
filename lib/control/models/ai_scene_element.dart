@@ -27,5 +27,5 @@ class AiSceneElement extends SceneElementAbstractModel {
 
   @override
   String toString() =>
-      'AiSceneElement: { next element: $nextElement, jump to element: ${jumpList.toString()}, messages: ${messages.toString()} }';
+      '{ AiElement, next element: $nextElement, jump to element: ${jumpList.toString()}, messages: ${messages.toString()} }';
 }

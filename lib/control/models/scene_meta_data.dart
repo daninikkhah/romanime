@@ -22,5 +22,5 @@ class SceneMetaData {
   }
 
   @override
-  String toString() => 'SceneMEtaData: {currentElement: '+ currentElement + ', tagToIdMap: ' + tagToIdMap.toString() + ', finalId: '+ finalId+ ', initialId: '+ initialId+'}';
+  String toString() => '{currentElement: '+ currentElement + ', tagToIdMap: ' + tagToIdMap.toString() + ', finalId: '+ finalId+ ', initialId: '+ initialId+'}';
 }
