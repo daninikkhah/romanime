@@ -6,15 +6,6 @@ import 'package:romanime/control/models/scene_model.dart';
 import '../../constants.dart';
 import 'mock_data.dart';
 
-
-void manageData(String jsonSceneData){
-
-  final decodedData = json.decode(jsonSceneData);
-  SceneModel scene = SceneModel.fromJson(decodedData);
-  log(scene.toString());
-
-}
-
 class ChatDataSource {
   static final _user = FirebaseAuth.instance.currentUser;
 
@@ -44,7 +35,7 @@ class ChatDataSource {
     return varList;
   }
 
-   static void getCurrentScene(String characterID) async {
+   static Future<SceneModel?> getCurrentScene(String characterID) async {
     // return List<element>
     if (_user == null) {
 
@@ -72,7 +63,10 @@ class ChatDataSource {
       //TODO: throw exception
     } else {
       ////todo
-      manageData(response.body);
+      final decodedData = json.decode(response.body);
+      return SceneModel.fromJson(decodedData);
+
     }
+    return null;
   }
 }

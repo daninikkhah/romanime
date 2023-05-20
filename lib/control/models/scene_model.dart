@@ -29,7 +29,7 @@ class SceneModel {
    int counter = 0;
     String string = 'sceneMetaData: $sceneMetaData \n elements: [';
     for (var element in elements) {
-      if(counter > 0)  string += ', ';
+      if(counter > 0)  string += '\n ';
       counter++;
       string += '$counter: $element';
     }

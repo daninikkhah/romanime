@@ -26,6 +26,6 @@ class ScenePlayerElement extends SceneElementAbstractModel {
   }
 
   @override
-  String toString()=> '{ scene player element, next element: $nextElement, jump: ${jumpList.toString()}, options: ${options.toString()}';
+  String toString()=> '{ scene player element, next element: $nextElement, jump: ${jumpList.toString()}, options: ${options.toString()} }';
 
 }
