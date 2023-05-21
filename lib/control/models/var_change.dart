@@ -30,7 +30,7 @@ class VarChange {
         operator = Operator.divide;
         break;
       default:
-        operator = Operator.equals;
+        operator = Operator.equals; //TODO throw error
         break;
     }
 
