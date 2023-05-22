@@ -6,7 +6,9 @@ class Integer extends Variable {
 
   int value;
 
+
   void change(VarChange varChange){
+
     if(varChange.variableName != name) {
       return; // TODO: throw exception
     }
