@@ -2,9 +2,9 @@ import 'abstract_message.dart';
 import '../../constants.dart';
 
 class TextMessage extends AbstractMessage{
-  TextMessage(this.text)  : super(type: MessageType.text);
+  TextMessage({required this.text, required super.sender}) : super(type: MessageType.text);
   final String text;
 
   @override
-  String toString()=> '{ text: $text }';
+  String toString()=> '{ text: $text , sender: ${sender == MessageSender.player? 'player' : 'ai'} }';
 }

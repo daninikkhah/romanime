@@ -9,3 +9,7 @@ enum MessageType{
   picture,
   voice
 }
+
+enum MessageSender{
+  player,ai
+}

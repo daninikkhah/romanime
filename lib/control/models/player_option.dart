@@ -1,5 +1,6 @@
 import 'abstract_message.dart';
 import 'var_change.dart';
+import '../../constants.dart';
 
 class PlayerOption {
   PlayerOption(
@@ -17,7 +18,7 @@ class PlayerOption {
      final List<VarChange>? varChangeList = jsonVarChangeList == null? null : jsonVarChangeList.map((jsonVarChangeData) => VarChange.fromJson(jsonVarChangeData)).toList();
 
     List<dynamic> jsonMessagesList = jsonData['texts'];
-    List<AbstractMessage> messagesList = jsonMessagesList.map((jsonMessage) => AbstractMessage.formJson(jsonMessage)).toList();
+    List<AbstractMessage> messagesList = jsonMessagesList.map((jsonMessage) => AbstractMessage.formJson(jsonMessage,MessageSender.player)).toList();
 
     return PlayerOption(
         previewText: jsonData['preview'],
