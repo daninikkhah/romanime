@@ -13,16 +13,11 @@ class BubbleChatOption extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
       child: ElevatedButton(
-        child: Text(
-          text,
-          style: const TextStyle(fontSize: 18,),
-          softWrap: true,
-        ),
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
           // MaterialStateProperty.all<EdgeInsetsGeometry>(
           //     const EdgeInsets.symmetric(vertical: 15, horizontal: 10)),
-          primary: _primaryColor,
+          backgroundColor: _primaryColor,
           //MaterialStateProperty.all<Color>(_primaryColor),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -39,6 +34,11 @@ class BubbleChatOption extends StatelessWidget {
           // ),
         ),
         onPressed: function,
+        child: Text(
+          text,
+          style: const TextStyle(fontSize: 18,),
+          softWrap: true,
+        ),
       ),
     );
   }
