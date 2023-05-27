@@ -18,7 +18,7 @@ class SceneModel {
     final List<SceneElementAbstractModel> sceneElements = [];
     elementsMap.forEach((key, value) {
       Map<String, dynamic> currentElementJson = elementsMap[key];
-      sceneElements.add(SceneElementAbstractModel.fromJson(currentElementJson));
+      sceneElements.add(SceneElementAbstractModel.fromJson(currentElementJson, key));
     });
 
     return SceneModel(sceneMetaData: sceneMetaData, elements: sceneElements);

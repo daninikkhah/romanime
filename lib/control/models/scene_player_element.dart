@@ -4,28 +4,35 @@ import 'player_option.dart';
 
 class ScenePlayerElement extends SceneElementAbstractModel {
   ScenePlayerElement(
-      {required super.nextElement,
+      {required super.id,
+      required super.nextElement,
       required super.jumpList,
       required this.options,
       super.elementType = ElementType.player});
 
   final List<PlayerOption> options;
 
-  factory ScenePlayerElement.fromJson(Map<String, dynamic> jsonData) {
+  factory ScenePlayerElement.fromJson(
+      Map<String, dynamic> jsonData, String id) {
+    final List<dynamic> jsonPlayerOptionList = jsonData['choices'];
+    final List<PlayerOption> playerOptionList = jsonPlayerOptionList
+        .map((jsonPlayerOptionData) =>
+            PlayerOption.fromJson(jsonPlayerOptionData))
+        .toList();
 
-    final List<dynamic> jsonPlayerOptionList = jsonData['choices'] ;
-    final List<PlayerOption> playerOptionList = jsonPlayerOptionList.map((jsonPlayerOptionData) => PlayerOption.fromJson(jsonPlayerOptionData)).toList();
-
-    List<dynamic>? jsonJumpList =jsonData['jump'];
-    List<JumpToElement>? jumpList = jsonJumpList == null? null : jsonJumpList.map((jsonJumpData) =>JumpToElement.fromJson(jsonJumpData) ).toList();
+    List<dynamic>? jsonJumpList = jsonData['jump'];
+    List<JumpToElement>? jumpList = jsonJumpList
+        ?.map((jsonJumpData) => JumpToElement.fromJson(jsonJumpData))
+        .toList();
 
     return ScenePlayerElement(
+        id: id,
         nextElement: jsonData['nextE'],
         jumpList: jumpList,
         options: playerOptionList);
   }
 
   @override
-  String toString()=> '{ scene player element, next element: $nextElement, jump: ${jumpList.toString()}, options: ${options.toString()} }';
-
+  String toString() =>
+      '{ id: $id, scene player element, next element: $nextElement, jump: ${jumpList.toString()}, options: ${options.toString()} }';
 }

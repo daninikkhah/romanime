@@ -5,22 +5,28 @@ import '../../constants.dart';
 
 class AiSceneElement extends SceneElementAbstractModel {
   AiSceneElement(
-      {required super.nextElement,
+      {required super.id,
+      required super.nextElement,
       required super.jumpList,
       super.elementType = ElementType.ai,
       required this.messages});
 
   final List<AbstractMessage> messages;
 
-  factory AiSceneElement.formJson(Map<String, dynamic> jsonData) {
-
+  factory AiSceneElement.formJson(Map<String, dynamic> jsonData, String id) {
     List<dynamic> jsonMessagesList = jsonData['texts'];
-    List<AbstractMessage> messagesList = jsonMessagesList.map((jsonMessage) => AbstractMessage.formJson(jsonMessage,MessageSender.ai)).toList();
+    List<AbstractMessage> messagesList = jsonMessagesList
+        .map((jsonMessage) =>
+            AbstractMessage.formJson(jsonMessage, MessageSender.ai))
+        .toList();
 
     List<dynamic>? jsonJumpList = jsonData['jump'];
-    List<JumpToElement>? jumpList = jsonJumpList == null? null : jsonJumpList.map((jsonJumpData) =>JumpToElement.fromJson(jsonJumpData) ).toList();
+    List<JumpToElement>? jumpList = jsonJumpList
+        ?.map((jsonJumpData) => JumpToElement.fromJson(jsonJumpData))
+        .toList();
 
     return AiSceneElement(
+        id: id,
         nextElement: jsonData['nextE'],
         jumpList: jumpList,
         messages: messagesList);
@@ -28,5 +34,5 @@ class AiSceneElement extends SceneElementAbstractModel {
 
   @override
   String toString() =>
-      '{ AiElement, next element: $nextElement, jump to element: ${jumpList.toString()}, messages: ${messages.toString()} }';
+      '{ id: $id, AiElement, next element: $nextElement, jump to element: ${jumpList.toString()}, messages: ${messages.toString()} }';
 }
