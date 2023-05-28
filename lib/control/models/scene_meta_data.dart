@@ -1,6 +1,6 @@
 
 class SceneMetaData {
-  SceneMetaData(
+  const SceneMetaData(
       {required this.currentElement,
       required this.tagToIdMap,
       required this.finalId,
@@ -22,5 +22,5 @@ class SceneMetaData {
   }
 
   @override
-  String toString() => '{currentElement: '+ currentElement + ', tagToIdMap: ' + tagToIdMap.toString() + ', finalId: '+ finalId+ ', initialId: '+ initialId+'}';
+  String toString() => '{ currentElement: $currentElement, tagToIdMap: $tagToIdMap, finalId: $finalId, initialId: $initialId}';
 }
