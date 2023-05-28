@@ -1,11 +1,12 @@
 
+import 'variable.dart';
+
 enum ConditionalOperator{equal,greater,smaller}
 
 class Condition{
-  Condition({required this.operator,required this.variableName, required this.value});
+  Condition({required this.operator,required this.variable});
   final ConditionalOperator operator;
-  final String variableName;
-  final int value;
+  final Variable variable;
 
   factory Condition.fromJson(Map<String, dynamic> jsonData) {
     final ConditionalOperator conditionalOperator;
@@ -13,10 +14,10 @@ class Condition{
       case '==':
         conditionalOperator = ConditionalOperator.equal;
         break;
-      case'>': //TODO: check if this ic correct
+      case'>': //TODO: check if this is correct
         conditionalOperator = ConditionalOperator.greater;
         break;
-      case '<'://TODO: check if this ic correct
+      case '<'://TODO: check if this is correct
         conditionalOperator = ConditionalOperator.smaller;
         break;
         default:
@@ -24,10 +25,10 @@ class Condition{
           break;
     }
 
-    return Condition(operator: conditionalOperator, variableName: jsonData['var'] , value: jsonData['val']);
+    return Condition(operator: conditionalOperator, variable: Variable.fromJson(name: jsonData['var'], value: jsonData['val']));
 
   }
 
   @override
-  String toString()=> '{ $variableName $operator $value }';
+  String toString()=> '{ $operator $variable }';
 }
