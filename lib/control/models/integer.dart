@@ -17,6 +17,7 @@ class Integer extends Variable {
     return false;
   }
 
+  @override
   bool isGreaterThan(Variable variable) {
     if (variable.type == VariableType.int) {
       Integer integerVariable = variable as Integer;
@@ -27,6 +28,7 @@ class Integer extends Variable {
     return false;
   }
 
+  @override
   bool isSmallerThan(Variable variable) {
     if (variable.type == VariableType.int) {
       Integer integerVariable = variable as Integer;
