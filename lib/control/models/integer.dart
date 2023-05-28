@@ -6,13 +6,42 @@ class Integer extends Variable {
 
   int value;
 
+  @override
+  bool isEqualTo(Variable variable) {
+    if (variable.type == VariableType.int) {
+      Integer integerVariable = variable as Integer;
+      if (value == integerVariable.value) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-  void change(VarChange varChange){
+  bool isGreaterThan(Variable variable) {
+    if (variable.type == VariableType.int) {
+      Integer integerVariable = variable as Integer;
+      if (value > integerVariable.value) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-    if(varChange.variableName != name) {
+  bool isSmallerThan(Variable variable) {
+    if (variable.type == VariableType.int) {
+      Integer integerVariable = variable as Integer;
+      if (value < integerVariable.value) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void change(VarChange varChange) {
+    if (varChange.variableName != name) {
       return; // TODO: throw exception
     }
-    switch(varChange.operator){
+    switch (varChange.operator) {
       case Operator.equals:
         value = varChange.value;
         break;
@@ -26,7 +55,7 @@ class Integer extends Variable {
         value *= varChange.value;
         break;
       case Operator.divide:
-        value = (value /varChange.value).round();
+        value = (value / varChange.value).round();
         break;
       default:
         value = varChange.value;
@@ -36,5 +65,4 @@ class Integer extends Variable {
 
   @override
   toString() => '{ name: $name, type: $type, value: $value }';
-
 }

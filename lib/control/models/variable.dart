@@ -7,7 +7,8 @@ abstract class Variable {
   final String name;
   final VariableType type;
 
-  factory Variable.fromJson({required String name,required String type,required dynamic value}) => Integer(name: name, value: value);
+  factory Variable.fromJson({required String name, String type ='int',required dynamic value}) => Integer(name: name, value: value);
 
+  bool isEqualTo(Variable variable);
 
 }
