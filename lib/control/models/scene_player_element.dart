@@ -5,7 +5,7 @@ import 'player_option.dart';
 class ScenePlayerElement extends SceneElementAbstractModel {
   ScenePlayerElement(
       {required super.id,
-      required super.nextElement,
+      required super.nextElementTag,
       required super.jumpList,
       required this.options,
       super.elementType = ElementType.player});
@@ -27,12 +27,12 @@ class ScenePlayerElement extends SceneElementAbstractModel {
 
     return ScenePlayerElement(
         id: id,
-        nextElement: jsonData['nextE'],
+        nextElementTag: jsonData['nextE'],
         jumpList: jumpList,
         options: playerOptionList);
   }
 
   @override
   String toString() =>
-      '{ id: $id, scene player element, next element: $nextElement, jump: ${jumpList.toString()}, options: ${options.toString()} }';
+      '{ id: $id, scene player element, next element: $nextElementTag, jump: ${jumpList.toString()}, options: ${options.toString()} }';
 }

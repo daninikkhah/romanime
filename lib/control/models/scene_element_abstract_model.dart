@@ -8,12 +8,12 @@ enum ElementType { player, ai }
 abstract class SceneElementAbstractModel {
   SceneElementAbstractModel(
       {required this.id,
-      required this.nextElement,
+      required this.nextElementTag,
       required this.jumpList,
       required this.elementType});
 
   final String id;
-  final String? nextElement;
+  final String? nextElementTag;
   final List<JumpToElement>? jumpList;
   final ElementType elementType;
 

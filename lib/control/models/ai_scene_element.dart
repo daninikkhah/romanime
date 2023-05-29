@@ -6,7 +6,7 @@ import '../../constants.dart';
 class AiSceneElement extends SceneElementAbstractModel {
   AiSceneElement(
       {required super.id,
-      required super.nextElement,
+      required super.nextElementTag,
       required super.jumpList,
       super.elementType = ElementType.ai,
       required this.messages});
@@ -27,12 +27,12 @@ class AiSceneElement extends SceneElementAbstractModel {
 
     return AiSceneElement(
         id: id,
-        nextElement: jsonData['nextE'],
+        nextElementTag: jsonData['nextE'],
         jumpList: jumpList,
         messages: messagesList);
   }
 
   @override
   String toString() =>
-      '{ id: $id, AiElement, next element: $nextElement, jump to element: ${jumpList.toString()}, messages: ${messages.toString()} }';
+      '{ id: $id, AiElement, next element: $nextElementTag, jump to element: ${jumpList.toString()}, messages: ${messages.toString()} }';
 }
