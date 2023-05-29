@@ -5,7 +5,7 @@ class SceneModel {
   SceneModel({required this.sceneMetaData, required this.elements});
 
   final SceneMetaData sceneMetaData;
-  final List<SceneElementAbstractModel> elements;
+  final Map<String,SceneElementAbstractModel> elements;
 
   factory SceneModel.fromJson(Map<String, dynamic> jsonData) {
     SceneMetaData sceneMetaData = SceneMetaData.fromJson(
@@ -15,10 +15,10 @@ class SceneModel {
       initialId: jsonData['starter'],
     );
     Map<String, dynamic> elementsMap = jsonData['elements'];
-    final List<SceneElementAbstractModel> sceneElements = [];
+    final Map<String,SceneElementAbstractModel> sceneElements = {};
     elementsMap.forEach((key, value) {
       Map<String, dynamic> currentElementJson = elementsMap[key];
-      sceneElements.add(SceneElementAbstractModel.fromJson(currentElementJson, key));
+      sceneElements.putIfAbsent(key,()=>SceneElementAbstractModel.fromJson(currentElementJson, key));
     });
 
     return SceneModel(sceneMetaData: sceneMetaData, elements: sceneElements);
@@ -26,13 +26,12 @@ class SceneModel {
 
   @override
   String toString() {
-   int counter = 0;
+   bool firstLine = true;
     String string = 'sceneMetaData: $sceneMetaData \n elements: [';
-    for (var element in elements) {
-      if(counter > 0)  string += '\n ';
-      counter++;
-      string += '$counter: $element';
-    }
+    elements.forEach((key, element) { if(!firstLine)  string += '\n ';
+    else firstLine = false;
+    string += element.toString();
+    });
     string += ' ] ';
     return string;
   }
