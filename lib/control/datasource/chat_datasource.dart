@@ -37,7 +37,7 @@ class ChatDataSource {
           varList.add(Variable.fromJson(name: key, type: 'int', value: value)));
     }
 
-    log(varList.toString());
+    // log(varList.toString());
 
     return varList;
   }
@@ -70,9 +70,9 @@ class ChatDataSource {
     } else {
       ////todo
       final decodedData = json.decode(response.body);
-      SceneModel scene = SceneModel.fromJson(decodedData);
+      SceneModel scene = SceneModel.fromJson(decodedData,varList);
       log(scene.toString());
-      return SceneModel.fromJson(decodedData);
+      return scene;
     }
     return null;
   }
