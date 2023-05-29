@@ -28,7 +28,7 @@ class Condition{
 
   }
 
-  bool evaluate(Variable variable){
+  bool evaluateVariable(Variable variable){
     if(variable.type == conditionValue.type ) {
       switch (operator) {
         case ConditionalOperator.equal:
@@ -42,6 +42,14 @@ class Condition{
       }
     }
     return false;
+  }
+
+  bool evaluateVariables(List<Variable> variables){
+    bool result = true;
+    for(Variable variable in variables){
+      result = result && evaluateVariable(variable);
+    }
+    return result;
   }
 
   @override
