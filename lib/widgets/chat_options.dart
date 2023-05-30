@@ -2,14 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import '../control/state_management/chat_controller.dart';
-import '../constants.dart';
 import 'bubble_chat_option.dart';
-import '../screens/date_screen.dart';
-import '../screens/in_chat_date_screen.dart';
-import '../control/character_messages.dart';
-import '../control/message.dart';
-import '../control/BobsFile.dart';
-import '../control/characters_messages_list.dart';
 import '../control/models/player_option.dart';
 
 
