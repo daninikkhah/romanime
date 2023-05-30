@@ -2,13 +2,13 @@ import 'variable.dart';
 
 class SceneMetaData {
   const SceneMetaData(
-      {required this.currentElement,
+      {required this.currentElementId,
       required this.tagToIdMap,
       required this.finalId,
       required this.initialId,
       required this.variables});
 
-  final String? currentElement;
+  final String? currentElementId;
   final Map<String, String> tagToIdMap;
   final String? finalId;
   final String initialId;
@@ -25,7 +25,7 @@ class SceneMetaData {
         ? {}
         : tagToIdMap.map((key, value) => MapEntry(key, value.toString()));
     return SceneMetaData(
-        currentElement: currentElement,
+        currentElementId: currentElement,
         tagToIdMap: convertedTAgToIdMAp,
         finalId: finalId,
         initialId: initialId,
@@ -34,5 +34,5 @@ class SceneMetaData {
 
   @override
   String toString() =>
-      '{ currentElement: $currentElement, initialId: $initialId, finalId: $finalId, \n variables: $variables, \n tagToIdMap: $tagToIdMap }';
+      '{ currentElement: $currentElementId, initialId: $initialId, finalId: $finalId, \n variables: $variables, \n tagToIdMap: $tagToIdMap }';
 }
