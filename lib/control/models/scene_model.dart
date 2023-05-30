@@ -4,9 +4,9 @@ import 'scene_element_abstract_model.dart';
 import 'variable.dart';
 
 class SceneModel {
-  SceneModel({required this.sceneMetaData, required this.elements});
+  SceneModel({required this.metadata, required this.elements});
 
-  final SceneMetaData sceneMetaData;
+  final SceneMetaData metadata;
   final Map<String,SceneElementAbstractModel> elements;
 
   factory SceneModel.fromJson(Map<String, dynamic> jsonData,List<Variable>? variables) {
@@ -25,15 +25,18 @@ class SceneModel {
       sceneElements.putIfAbsent(key,()=>SceneElementAbstractModel.fromJson(currentElementJson, key));
     });
 
-    return SceneModel(sceneMetaData: sceneMetaData, elements: sceneElements);
+    return SceneModel(metadata: sceneMetaData, elements: sceneElements);
   }
 
   @override
   String toString() {
    bool firstLine = true;
-    String string = 'sceneMetaData: $sceneMetaData \n elements: [';
-    elements.forEach((key, element) { if(!firstLine)  string += '\n ';
-    else firstLine = false;
+    String string = 'sceneMetaData: $metadata \n elements: [';
+    elements.forEach((key, element) { if(!firstLine) {
+      string += '\n ';
+    } else {
+      firstLine = false;
+    }
     string += element.toString();
     });
     string += ' ] ';
