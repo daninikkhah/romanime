@@ -17,6 +17,7 @@ class MatchedCharactersProvider with ChangeNotifier{
     _matchedCharacters.addAll(matchedCharacters) ;
     matchedCharacters.forEach((character) {
       Provider.of<CharactersPictureProvider>(context,listen: false).downloadImage(character);
+      Provider.of<CharacterChatControllerProvider>(context,listen: false).addNewCharacter(character.id);
     });
     // TODO: fetch the pictures
     notifyListeners();
