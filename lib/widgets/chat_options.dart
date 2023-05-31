@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import '../control/state_management/chat_controller.dart';
+import '../control/state_management/character_chat_controller_provider.dart';
 import 'bubble_chat_option.dart';
 import '../control/models/player_option.dart';
 
@@ -27,8 +28,9 @@ class _ChatOptionsState extends State<ChatOptions> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ChatController>(builder:
-    (context,chatController,_){
+    return Consumer<CharacterChatControllerProvider>(builder:
+    (context,chatControllerProvider,_){
+      ChatController chatController = chatControllerProvider.chatControllers[widget.id] ?? ChatController('null'); //TODO: handle error
       List<PlayerOption> options = chatController.options;
       String selectedOptionPreview = chatController.selectedOption == null? '' : chatController.selectedOption!.previewText;
       _showOptions = true;

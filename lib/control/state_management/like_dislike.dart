@@ -17,6 +17,8 @@ class LikeDislike {
         Provider.of<MatchedCharactersProvider>(context, listen: false);
     dislike(context);
     matchedCharactersProvider.like(
-        character: character, matchedPopUpAlert: matchedPopUpAlert);
+        context: context,
+        character: character,
+        matchedPopUpAlert: matchedPopUpAlert);
   }
 }

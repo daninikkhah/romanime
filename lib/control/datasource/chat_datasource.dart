@@ -71,7 +71,7 @@ class ChatDataSource {
       ////todo
       final decodedData = json.decode(response.body);
       SceneModel scene = SceneModel.fromJson(decodedData,varList);
-      log(scene.toString());
+      // log(scene.toString());
       return scene;
     }
     return null;

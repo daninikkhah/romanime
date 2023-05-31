@@ -14,14 +14,14 @@ import 'screens/create_new_user_screen.dart';
 import 'control/profile_data_provider.dart';
 import 'control/state_management/character_picture_provider.dart';
 import 'control/state_management/matched_characters_provider.dart';
+import 'control/state_management/character_chat_controller_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(
-      MultiProvider(
+  runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<ProfileDataProvider>(
         create: (context) => ProfileDataProvider(),
@@ -36,10 +36,13 @@ void main() async {
           create: (context) => TabsController()),
       ChangeNotifierProvider<CharactersPictureProvider>(
         create: (context) => CharactersPictureProvider(),
-      )
+      ),
+      ChangeNotifierProvider<CharacterChatControllerProvider>(
+        create: (context) => CharacterChatControllerProvider(),
+      ),
     ],
     child: const DatingApp(),
-  ));// TODO: check if it is needed to be here at top
+  )); // TODO: check if it is needed to be here at top
 }
 
 class DatingApp extends StatefulWidget {
@@ -80,14 +83,11 @@ class _DatingAppState extends State<DatingApp> {
       create: (context) => CharactersMessagesList(),
       child: MaterialApp(
         theme: ThemeData(
-          backgroundColor: const Color(0xFFD2D2D2),
-
-          // backgroundColor: Color(0xffE1BEE7),
-          // backgroundColor: Color.fromRGBO(210, 210, 210, 1),
           primaryColor: Colors.deepPurpleAccent,
           appBarTheme: const AppBarTheme(backgroundColor: Colors.deepPurple),
-          colorScheme:
-              ColorScheme.fromSwatch().copyWith(secondary: Colors.pink),
+          colorScheme: ColorScheme.fromSwatch()
+              .copyWith(secondary: Colors.pink)
+              .copyWith(background: const Color(0xFFD2D2D2)),
         ),
         home: _isAuthenticated
             ? const TabsScreen()

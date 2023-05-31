@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../datasource/like_dislike_datasource.dart';
 import 'character_picture_provider.dart';
 import '../models/character.dart';
+import 'character_chat_controller_provider.dart';
 
 
 class MatchedCharactersProvider with ChangeNotifier{
@@ -23,11 +24,11 @@ class MatchedCharactersProvider with ChangeNotifier{
 
 
 
-  void like({required Character character, required Future<Object> matchedPopUpAlert}) async {
+  void like({required BuildContext context,required Character character, required Future<Object> matchedPopUpAlert}) async {
     if (character.isPlayable) {
       // todo: check if character is already liked
       _matchedCharacters.add(character);
-      print(_matchedCharacters);
+      Provider.of<CharacterChatControllerProvider>(context,listen: false).addNewCharacter(character.id);
       notifyListeners();
       LikeDislikeDatasource.like(character.id);
       await matchedPopUpAlert;

@@ -24,7 +24,6 @@ class CharacterChatScreen extends StatelessWidget {
         Provider.of<MatchedCharactersProvider>(context, listen: false)
             .matchedCharacters
             .firstWhere((character) => character.id == id);
-    ChatDataSource.getCurrentScene(character.id);
 
     return Scaffold(
       backgroundColor: _backgroundColor,
@@ -78,7 +77,7 @@ class CharacterChatScreen extends StatelessWidget {
           children: [
             const HorizontalProgressBar(0.7),
             Expanded(child: Container()), //MessageStream(id)
-            // ChatOptions(id),
+            ChatOptions(id),
             // MessageField(id)
           ],
         ),
