@@ -23,10 +23,15 @@ class ChatOptions extends StatefulWidget {
 }
 
 class _ChatOptionsState extends State<ChatOptions> {
-  bool _optionsVisibility = true;
-  bool _showOptions = false;
+  // bool _optionsVisibility = true;
+  bool showOptions = true;
 
-  void changeOptionsVisibilityState()=> _optionsVisibility = ! _optionsVisibility;
+  void changeOptionsVisibilityState() {
+    setState(() {
+      showOptions = !showOptions;
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +39,6 @@ class _ChatOptionsState extends State<ChatOptions> {
     (context,chatControllerProvider,_){
       ChatController chatController = chatControllerProvider.chatControllers[widget.id]! ; //TODO: handle error null case
       List<PlayerOption> options = chatController.options;
-      _showOptions = true;
-      if (chatController.options.isEmpty) {
-        _showOptions = false;
-      }
-
-      // final Size screenSize = MediaQuery
-      //     .of(context)
-      //     .size; //TODO: remove if it is not used
 
       return AnimatedSize(
         duration: Duration(milliseconds: options.length < 4
@@ -49,7 +46,7 @@ class _ChatOptionsState extends State<ChatOptions> {
             : 400),
 
         child: Container(
-          decoration: _showOptions && _optionsVisibility
+          decoration: options.isNotEmpty && showOptions
               ? const BoxDecoration(
               color: _darkPrimaryColor,
               borderRadius: BorderRadius.only(
@@ -61,7 +58,7 @@ class _ChatOptionsState extends State<ChatOptions> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               //TODO make sure options do not overflow
-              if (_showOptions && _optionsVisibility)
+              if (options.isNotEmpty && showOptions)
                 ListView.builder(
                   itemCount: options.length,
                   shrinkWrap: true,
