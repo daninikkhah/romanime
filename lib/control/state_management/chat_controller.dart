@@ -91,7 +91,7 @@ class ChatController {
   }
 
   sendPlayerMessage() {
-
+    options = [];
     if (playerMessagesQueue != null && playerMessagesQueue!.isNotEmpty) {
       messages.add(playerMessagesQueue!.first);
       playerMessagesQueue!.removeFirst();
