@@ -10,8 +10,8 @@ import '../models/scene_player_element.dart';
 import '../models/character.dart';
 import '../datasource/chat_datasource.dart';
 
-class ChatController{
-  ChatController({required this.characterId, required this.notifyListeners}){
+class ChatController {
+  ChatController({required this.characterId, required this.notifyListeners}) {
     fetchNewScene();
   }
 
@@ -29,20 +29,29 @@ class ChatController{
   Queue<AbstractMessage>? playerMessagesQueue;
   List<AbstractMessage>? aiMessagesSendingList;
 
-
-  void fetchNewScene() async{
+  void fetchNewScene() async {
     currentScene = await ChatDataSource.getCurrentScene(characterId);
-    getNextElement();
+    initiateScene();
   }
 
-  void initiate(){
-    if(!initiated)
-      getNextElement();
+  void initiateScene() {
+    if(currentScene != null){
+      String? id;
+      SceneMetaData metadata = currentScene!.metadata;
+      if (metadata.currentElementId == null) {
+        // get the first element
+        id = metadata.tagToIdMap[metadata.initialId] ?? '0';
+      } else {
+        // get saved element
+        id = metadata.tagToIdMap[metadata.currentElementId] ?? '0';
+      }
+      updateChatStatus(currentScene!.elements[id]);
+    }
   }
 
   void getNextElement() {
     // getting the next element
-    if(currentScene != null) {
+    if (currentScene != null) {
       String? id;
       SceneMetaData metadata = currentScene!.metadata;
       if (currentElement != null) {
@@ -50,52 +59,53 @@ class ChatController{
           // using jumpList & checking which condition is met
           for (var jumpToElement in currentElement!.jumpList!) {
             if (jumpToElement.meetsConditions(metadata.variables)) {
-              return updateChatStatus( currentScene!.elements[jumpToElement.goToElement]);
+              return updateChatStatus(
+                  currentScene!.elements[jumpToElement.goToElement]);
             }
           }
         }
         if (currentElement!.nextElementTag != null) {
           //get next elements id
-           id = metadata
-              .tagToIdMap[currentElement!.nextElementTag]; // TODO figure out why this expression returns String?
+          id = metadata.tagToIdMap[currentElement!
+              .nextElementTag]; // TODO figure out why this expression returns String?
           //change current element with the new one
         }
-      }
-      else if(metadata.currentElementId == null) {
-          // get the first element
-        id = metadata.tagToIdMap[metadata.initialId] ?? '0';
-        }
-      else{
-        // get saved element
-         id = metadata.tagToIdMap[metadata.currentElementId] ?? '0';
       }
       updateChatStatus(currentScene!.elements[id]);
     }
   }
 
-  void updateChatStatus(SceneElementAbstractModel? element){
+  void updateChatStatus(SceneElementAbstractModel? element) {
     currentElement = element;
-    element?.elementType == ElementType.player? updateOptions(element as ScenePlayerElement) : sendAiMessage(element as AiSceneElement);
+    if(element != null) {
+      element.elementType == ElementType.player
+          ? updateOptions(element as ScenePlayerElement)
+          : sendAiMessage(element as AiSceneElement);
+    }
     //notifyListeners(); //TODO: check if needed
   }
 
-  updateOptions(ScenePlayerElement element){
+  updateOptions(ScenePlayerElement element) {
     options = element.options;
     notifyListeners();
   }
 
   sendPlayerMessage() {
-    if(playerMessagesQueue != null) {
-      while (playerMessagesQueue!.isNotEmpty) {
-        messages.add(playerMessagesQueue!.first);
-        playerMessagesQueue!.removeFirst();
-      }
+
+    if (playerMessagesQueue != null && playerMessagesQueue!.isNotEmpty) {
+      messages.add(playerMessagesQueue!.first);
+      playerMessagesQueue!.removeFirst();
+      notifyListeners();
+      if(playerMessagesQueue!.isEmpty)
+        {
+          getNextElement();
+        }
     }
   }
 
   sendAiMessage(AiSceneElement element) {
     for (AbstractMessage message in element.messages) {
-      Future.delayed(Duration(milliseconds: 400));//TODO: make it dynamic
+      Future.delayed(Duration(milliseconds: 400)); //TODO: make it dynamic
       messages.add(message);
       notifyListeners();
     }
@@ -108,7 +118,5 @@ class ChatController{
     notifyListeners();
   }
 
-  void saveCurrentElement(){}
-
-
+  void saveCurrentElement() {}
 }

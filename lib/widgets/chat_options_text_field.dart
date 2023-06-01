@@ -16,7 +16,7 @@ class ChatOptionsTextField extends StatelessWidget {
   final  Function changeOptionsVisibilityState;
 
   String getSelectedMessage(){
-    AbstractMessage? selectedMessage = chatController.playerMessagesQueue?.first;
+    AbstractMessage? selectedMessage = chatController.playerMessagesQueue?.firstOrNull;
     if(selectedMessage != null) {
       if (selectedMessage.type == MessageType.text) {
         TextMessage selectedTextMessage = selectedMessage as TextMessage;
@@ -78,7 +78,7 @@ class ChatOptionsTextField extends StatelessWidget {
                   icon: const Icon(Icons.send,
                       size: 30, color: _primaryColor),
                   iconSize: 30,
-                  onPressed: () async {})
+                  onPressed: chatController.sendPlayerMessage)
             ],
           )),
     );
