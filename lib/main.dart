@@ -95,7 +95,7 @@ class _DatingAppState extends State<DatingApp> {
         // :const TabsScreen(),
         routes: {
           TabsScreen.route: (context) => const TabsScreen(),
-          ChatsScreen.route: (context) => const ChatsScreen(),
+          // ChatsScreen.route: (context) => const ChatsScreen(),
           // CharacterChatScreen.route: (context) => CharacterChatScreen(),
           DateScreen.route: (context) => const DateScreen(),
           CreateNewUserScreen.url: (context) => const CreateNewUserScreen(),

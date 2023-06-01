@@ -10,12 +10,13 @@ import '../models/scene_player_element.dart';
 import '../models/character.dart';
 import '../datasource/chat_datasource.dart';
 
-class ChatController with ChangeNotifier {
-  ChatController(this.characterId){
+class ChatController{
+  ChatController({required this.characterId, required this.notifyListeners}){
     fetchNewScene();
   }
 
   final String characterId;
+  final Function notifyListeners;
 
   bool initiated = false;
   SceneModel? currentScene;

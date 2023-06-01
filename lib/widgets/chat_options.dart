@@ -32,10 +32,8 @@ class _ChatOptionsState extends State<ChatOptions> {
   Widget build(BuildContext context) {
     return Consumer<CharacterChatControllerProvider>(builder:
     (context,chatControllerProvider,_){
-      ChatController chatController = chatControllerProvider.chatControllers[widget.id] ?? ChatController('null'); //TODO: handle error
+      ChatController chatController = chatControllerProvider.chatControllers[widget.id]! ; //TODO: handle error null case
       List<PlayerOption> options = chatController.options;
-      print(options);
-      String selectedOptionMessage = chatController.selectedOption == null? '' : chatController.selectedOption!.previewText;
       _showOptions = true;
       if (chatController.options.isEmpty) {
         _showOptions = false;

@@ -8,7 +8,7 @@ class CharacterChatControllerProvider with ChangeNotifier{
 
   void addNewCharacter(String characterId){
 
-    chatControllers.putIfAbsent(characterId, () => ChatController(characterId));
+    chatControllers.putIfAbsent(characterId, () => ChatController(characterId: characterId, notifyListeners: notifyListeners));
     notifyListeners();
   }
 
