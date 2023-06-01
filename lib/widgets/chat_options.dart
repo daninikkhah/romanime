@@ -5,6 +5,7 @@ import '../control/state_management/chat_controller.dart';
 import '../control/state_management/character_chat_controller_provider.dart';
 import 'bubble_chat_option.dart';
 import '../control/models/player_option.dart';
+import 'chat_options_text_field.dart';
 
 
 const double _radius = 20;
@@ -22,9 +23,10 @@ class ChatOptions extends StatefulWidget {
 }
 
 class _ChatOptionsState extends State<ChatOptions> {
-  bool _setOptionsVisible = true;
+  bool _optionsVisibility = true;
   bool _showOptions = false;
 
+  void changeOptionsVisibilityState()=> _optionsVisibility = ! _optionsVisibility;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,8 @@ class _ChatOptionsState extends State<ChatOptions> {
     (context,chatControllerProvider,_){
       ChatController chatController = chatControllerProvider.chatControllers[widget.id] ?? ChatController('null'); //TODO: handle error
       List<PlayerOption> options = chatController.options;
-      String selectedOptionPreview = chatController.selectedOption == null? '' : chatController.selectedOption!.previewText;
+      print(options);
+      String selectedOptionMessage = chatController.selectedOption == null? '' : chatController.selectedOption!.previewText;
       _showOptions = true;
       if (chatController.options.isEmpty) {
         _showOptions = false;
@@ -48,7 +51,7 @@ class _ChatOptionsState extends State<ChatOptions> {
             : 400),
 
         child: Container(
-          decoration: _showOptions && _setOptionsVisible
+          decoration: _showOptions && _optionsVisibility
               ? const BoxDecoration(
               color: _darkPrimaryColor,
               borderRadius: BorderRadius.only(
@@ -60,7 +63,7 @@ class _ChatOptionsState extends State<ChatOptions> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               //TODO make sure options do not overflow
-              if (_showOptions && _setOptionsVisible)
+              if (_showOptions && _optionsVisibility)
                 ListView.builder(
                   itemCount: options.length,
                   shrinkWrap: true,
@@ -71,63 +74,7 @@ class _ChatOptionsState extends State<ChatOptions> {
                         function: chatController.selectOption,
                       ),
                 ),
-
-              Padding(
-                padding:
-                const EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 5),
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all<OutlinedBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(_radius))),
-                        backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                            const EdgeInsets.all(5))),
-                    onPressed: options.isEmpty
-                        ? null
-                        : () {
-                      setState(() {
-                        _setOptionsVisible = !_setOptionsVisible;
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(right: 20, left: 10),
-                          child: Icon(Icons.add_circle_outline,
-                              size: 30, color: _primaryColor),
-                        ),
-                        Expanded(
-                          child: selectedOptionPreview == ''
-                              ? const Text('select a message',
-                              style: TextStyle(
-                                  fontSize: 22,
-                                  color: _primaryTextColor,
-                                  fontWeight: FontWeight.w700))
-                              : AnimatedTextKit(
-                            key: ValueKey<String>(selectedOptionPreview),
-                            animatedTexts: [
-                              TyperAnimatedText(selectedOptionPreview,
-                                  textStyle: const TextStyle(
-                                      fontSize: 22,
-                                      color: _primaryTextColor,
-                                      fontWeight: FontWeight.w700),
-                                  speed: const Duration(milliseconds: 80))
-                            ],
-                            isRepeatingAnimation: false,
-                            displayFullTextOnTap: true, //TODO ask the ux team
-                          ),
-                        ),
-                        // send icon
-                        IconButton(
-                            icon: const Icon(Icons.send,
-                                size: 30, color: _primaryColor),
-                            iconSize: 30,
-                            onPressed: () async {})
-                      ],
-                    )),
-              )
+              ChatOptionsTextField(chatController: chatController, changeOptionsVisibilityState: changeOptionsVisibilityState)
             ],
           ),
         ),
