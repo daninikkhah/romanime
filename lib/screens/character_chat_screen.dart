@@ -76,7 +76,9 @@ class CharacterChatScreen extends StatelessWidget {
         child: Column(
           children: [
             const HorizontalProgressBar(0.7),
-            Expanded(child: Container()), //MessageStream(id)
+            // Expanded(child: Container()),
+            Expanded(child: MessageStream(id)),
+
             ChatOptions(id),
             // MessageField(id)
           ],

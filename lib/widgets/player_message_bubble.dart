@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../control/message.dart';
+import '../control/models/abstract_message.dart';
+import '../control/models/text_message.dart';
 
 
 const double _radius = 30;
@@ -11,7 +12,7 @@ class PlayerMessageBubble extends StatelessWidget {
     required this.message,
   }) : super(key: key);
 
-  final Message message;
+  final TextMessage message;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class PlayerMessageBubble extends StatelessWidget {
               constraints:
                   BoxConstraints(maxWidth: _width * 0.6),
               child: Text(
-                message.message,
+                message.text,
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.white,

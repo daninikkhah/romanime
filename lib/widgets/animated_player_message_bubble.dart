@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'player_message_bubble.dart';
-import '../control/message.dart';
+import '../control/models/abstract_message.dart';
+import '../control/models/text_message.dart';
 
 class AnimatedPlayerMessageBubble extends StatefulWidget {
   const AnimatedPlayerMessageBubble({
@@ -8,7 +9,7 @@ class AnimatedPlayerMessageBubble extends StatefulWidget {
     required this.message,
   }) : super(key: key);
 
-  final Message message;
+  final TextMessage message;
 
   @override
   State<AnimatedPlayerMessageBubble> createState() => _AnimatedPlayerMessageBubbleState();

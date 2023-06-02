@@ -21,13 +21,15 @@ class ChatController {
   bool initiated = false;
   SceneModel? currentScene;
   SceneModel? nextScene;
-  List<AbstractMessage> messages = [];
+  List<AbstractMessage> _messages = [];
 
   SceneElementAbstractModel? currentElement;
   List<PlayerOption> options = [];
   PlayerOption? selectedOption;
   Queue<AbstractMessage>? playerMessagesQueue;
   List<AbstractMessage>? aiMessagesSendingList;
+
+  List<AbstractMessage> get messages => [...(_messages.reversed)];
 
   void fetchNewScene() async {
     currentScene = await ChatDataSource.getCurrentScene(characterId);
@@ -93,7 +95,7 @@ class ChatController {
   sendPlayerMessage() {
     options = [];
     if (playerMessagesQueue != null && playerMessagesQueue!.isNotEmpty) {
-      messages.add(playerMessagesQueue!.first);
+      _messages.add(playerMessagesQueue!.first);
       playerMessagesQueue!.removeFirst();
       notifyListeners();
       if(playerMessagesQueue!.isEmpty)
@@ -106,7 +108,7 @@ class ChatController {
   sendAiMessage(AiSceneElement element) {
     for (AbstractMessage message in element.messages) {
       Future.delayed(Duration(milliseconds: 400)); //TODO: make it dynamic
-      messages.add(message);
+      _messages.add(message);
       notifyListeners();
     }
     getNextElement();
