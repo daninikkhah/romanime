@@ -41,6 +41,6 @@ class VarChange {
   }
 
   @override
-  String toString() => '{ $variableName $operator $variableName }';
+  String toString() => '{ $variableName $operator $value }';
 }
 //TODO: should I handle division by 0 here?

@@ -20,11 +20,15 @@ class JumpToElement {
 
   bool meetsConditions(List<Variable> variables){
 
+    print(toString());
+
     bool result = true;
 
     for(Condition condition in conditions){
       result = result && condition.evaluateVariables(variables);
+      print('$conditions: $result');
     }
+    print('${toString()}: $result');
     return result;
   }
 

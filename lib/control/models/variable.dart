@@ -1,4 +1,5 @@
 import 'integer.dart';
+import 'var_change.dart';
 enum VariableType { string, int, bool, double }
 
 abstract class Variable {
@@ -12,5 +13,7 @@ abstract class Variable {
   bool isEqualTo(Variable variable);
   bool isGreaterThan(Variable variable);
   bool isSmallerThan(Variable variable);
+
+  void applyVarChange(VarChange varChange);
 
 }

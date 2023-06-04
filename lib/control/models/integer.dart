@@ -39,7 +39,8 @@ class Integer extends Variable {
     return false;
   }
 
-  void change(VarChange varChange) {
+  @override
+  void applyVarChange(VarChange varChange) {
     if (varChange.variableName != name) {
       return; // TODO: throw exception
     }

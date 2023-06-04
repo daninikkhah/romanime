@@ -29,7 +29,7 @@ class Condition{
   }
 
   bool evaluateVariable(Variable variable){
-    if(variable.type == conditionValue.type ) {
+    if(variable.type == conditionValue.type && variable.name == conditionValue.name) {
       switch (operator) {
         case ConditionalOperator.equal:
           return conditionValue.isEqualTo(variable);
@@ -45,9 +45,10 @@ class Condition{
   }
 
   bool evaluateVariables(List<Variable> variables){
-    bool result = true;
+    bool result = false;
     for(Variable variable in variables){
-      result = result && evaluateVariable(variable);
+      result = result || evaluateVariable(variable);
+      print('$variable: $result');
     }
     return result;
   }
