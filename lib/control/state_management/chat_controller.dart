@@ -1,6 +1,6 @@
 import 'dart:collection';
+import 'package:flutter/material.dart';
 import 'dart:developer';
-import 'package:flutter/foundation.dart';
 import 'package:romanime/control/models/var_change.dart';
 import 'package:romanime/control/models/variable.dart';
 import '../models/scene_meta_data.dart';
@@ -20,6 +20,8 @@ class ChatController {
 
   final String characterId;
   final Function notifyListeners;
+  final GlobalKey<AnimatedListState> animatedListKey =
+  GlobalKey<AnimatedListState>();
 
   bool initiated = false;
   SceneModel? currentScene;
@@ -38,22 +40,26 @@ class ChatController {
 
   void fetchNewScene() async {
     currentScene = await ChatDataSource.getCurrentScene(characterId);
-    initiateScene();
   }
 
   void initiateScene() {
-    if(currentScene != null){
-      String? id;
-      SceneMetaData metadata = currentScene!.metadata;
-      varList = metadata.variables;
-      if (metadata.currentElementId == null) {
-        // get the first element
-        id = metadata.tagToIdMap[metadata.initialId] ?? '0';
-      } else {
-        // get saved element
-        id = metadata.tagToIdMap[metadata.currentElementId] ?? '0';
+    //must be called when initializing the chat
+    // probably in the characterChatScreen or it's children, like chatStream
+   if(!initiated) {
+      if (currentScene != null) {
+        String? id;
+        SceneMetaData metadata = currentScene!.metadata;
+        varList = metadata.variables;
+        if (metadata.currentElementId == null) {
+          // get the first element
+          id = metadata.tagToIdMap[metadata.initialId] ?? '0';
+        } else {
+          // get saved element
+          id = metadata.tagToIdMap[metadata.currentElementId] ?? '0';
+        }
+        updateChatStatus(currentScene!.elements[id]);
       }
-      updateChatStatus(currentScene!.elements[id]);
+      initiated = true;
     }
   }
 
@@ -104,7 +110,7 @@ class ChatController {
     if(!isVarChangeApplied) applyVarChange(selectedOption?.varChaneList);
       options = [];
     if (playerMessagesQueue != null && playerMessagesQueue!.isNotEmpty) {
-      _messages.add(playerMessagesQueue!.first);
+      _addMessage(playerMessagesQueue!.first);
       playerMessagesQueue!.removeFirst();
       notifyListeners();
       if(playerMessagesQueue!.isEmpty)
@@ -117,8 +123,8 @@ class ChatController {
   sendAiMessage(AiSceneElement element) async {
     bool isFirstMessage = true;
     for (AbstractMessage message in element.messages) {
-      await Future.delayed(Duration(milliseconds: isFirstMessage? 800 :2500)); //TODO: make it dynamic
-      _messages.add(message);
+      await Future.delayed(Duration(milliseconds: isFirstMessage? 1200 :1800)); //TODO: make it dynamic
+     _addMessage(message);
       isFirstMessage = false;
       notifyListeners();
     }
@@ -141,6 +147,11 @@ class ChatController {
       }
       isVarChangeApplied = true;
     }
+  }
+
+  void _addMessage(AbstractMessage message){
+    _messages.add(message);
+    animatedListKey.currentState?.insertItem(0,duration:const Duration(milliseconds: 400) );
   }
 
   void saveCurrentElement() {}

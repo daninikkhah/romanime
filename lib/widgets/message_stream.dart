@@ -25,7 +25,6 @@ class MessageStream extends StatefulWidget {
 }
 
 class _MessageStreamState extends State<MessageStream> {
-  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,6 @@ class _MessageStreamState extends State<MessageStream> {
       builder: (context,chatControllerProvider,_) {
         ChatController chatController = chatControllerProvider.chatControllers[widget.id]!; //TODO: handle null case
         return ListView.builder(
-          controller: _scrollController,
             itemCount: chatController.messages.length,
             reverse: true,
             // ignore: curly_braces_in_flow_control_structures, curly_braces_in_flow_control_structures
@@ -41,7 +39,6 @@ class _MessageStreamState extends State<MessageStream> {
               TextMessage message = chatController.messages[index] as TextMessage ;
 
               if (index == 0) {
-                print('animated message index $index: $message');
                 return message.sender == MessageSender.player
                     ? Row(
                   children: [
@@ -53,7 +50,7 @@ class _MessageStreamState extends State<MessageStream> {
                   children: [
                     AnimatedAiCharactersMessageBubble(
                       message: message,
-                      key: Key(DateTime.now().toIso8601String() + message.toString()),
+                      key: ValueKey(DateTime.now().toIso8601String() + message.toString()),
                     ),
                     const Spacer(),
                   ],
@@ -61,7 +58,6 @@ class _MessageStreamState extends State<MessageStream> {
               }
 
               if (index == 1) {
-                print('message index $index: $message');
 
                 return message.sender == MessageSender.player
                     ? Row(
@@ -79,7 +75,6 @@ class _MessageStreamState extends State<MessageStream> {
                   ],
                 );
               }
-
 
               return message.sender == MessageSender.player
                   ? Row(

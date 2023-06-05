@@ -9,6 +9,7 @@ import '../widgets/horizontal_progress_bar.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/character_circular_avatar_image_loader.dart';
 import '../control/datasource/chat_datasource.dart';
+import '../widgets/chat_stream.dart';
 
 const Color _backgroundColor = Color(0xFFD2D2D2);
 
@@ -77,7 +78,7 @@ class CharacterChatScreen extends StatelessWidget {
           children: [
             const HorizontalProgressBar(0.7),
             // Expanded(child: Container()),
-            Expanded(child: MessageStream(id)),
+            Expanded(child: ChatStream(id: id,)),
 
             ChatOptions(id),
             // MessageField(id)
