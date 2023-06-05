@@ -35,9 +35,17 @@ class _AnimatedAiCharactersMessageBubbleState
       CurvedAnimation(parent: _animationController, curve: Curves.easeIn));
   bool bIsTyping = true;
 
+  void changeTypingStatus(){
+    setState(() {
+      bIsTyping = false;
+    });
+  }
+  Timer? timer;
   @override
   void dispose() {
     // TODO: implement dispose
+    timer?.cancel();
+    timer = null;
     _animationController.dispose();
     super.dispose();
   }
@@ -48,11 +56,8 @@ class _AnimatedAiCharactersMessageBubbleState
         .of(context)
         .size
         .width;
-    Timer(const Duration(seconds: 2), () {
-      setState(() {
-        bIsTyping = false;
-      });
-    }); //TODO fix the error (timer is calling the function after widgets dispose)
+    timer = Timer(const Duration(milliseconds: 2000), () => changeTypingStatus());
+    //TODO fix the error (timer is calling the function after widgets dispose)
     return SlideTransition(
       position: _offsetAnimation,
       child: Container(

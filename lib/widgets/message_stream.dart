@@ -41,6 +41,7 @@ class _MessageStreamState extends State<MessageStream> {
               TextMessage message = chatController.messages[index] as TextMessage ;
 
               if (index == 0) {
+                print('animated message index $index: $message');
                 return message.sender == MessageSender.player
                     ? Row(
                   children: [
@@ -52,6 +53,7 @@ class _MessageStreamState extends State<MessageStream> {
                   children: [
                     AnimatedAiCharactersMessageBubble(
                       message: message,
+                      key: Key(DateTime.now().toIso8601String() + message.toString()),
                     ),
                     const Spacer(),
                   ],
@@ -59,6 +61,8 @@ class _MessageStreamState extends State<MessageStream> {
               }
 
               if (index == 1) {
+                print('message index $index: $message');
+
                 return message.sender == MessageSender.player
                     ? Row(
                   children: [

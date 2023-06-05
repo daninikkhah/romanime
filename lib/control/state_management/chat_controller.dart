@@ -117,12 +117,12 @@ class ChatController {
   sendAiMessage(AiSceneElement element) async {
     bool isFirstMessage = true;
     for (AbstractMessage message in element.messages) {
-      await Future.delayed(Duration(milliseconds: isFirstMessage? 800 :4000)); //TODO: make it dynamic
+      await Future.delayed(Duration(milliseconds: isFirstMessage? 800 :2500)); //TODO: make it dynamic
       _messages.add(message);
       isFirstMessage = false;
       notifyListeners();
     }
-    Future.delayed(const Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 2400));
     getNextElement();
   }
 

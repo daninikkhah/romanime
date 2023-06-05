@@ -22,6 +22,13 @@ class _AiCharactersMessageBubbleTransitionState extends State<AiCharactersMessag
   late final Animation<double> _animation = CurvedAnimation(parent: _animationController, curve: Curves.linear);
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizeTransition(
       sizeFactor: _animation,
