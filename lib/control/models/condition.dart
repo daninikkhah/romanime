@@ -48,7 +48,6 @@ class Condition{
     bool result = false;
     for(Variable variable in variables){
       result = result || evaluateVariable(variable);
-      print('$variable: $result');
     }
     return result;
   }

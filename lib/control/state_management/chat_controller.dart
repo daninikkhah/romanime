@@ -58,7 +58,6 @@ class ChatController {
   }
 
   void getNextElement() {
-    print('varList: $varList');
     // getting the next element
     if (currentScene != null) {
       String? id;
@@ -69,7 +68,6 @@ class ChatController {
           for (var jumpToElement in currentElement!.jumpList!) {
             if (jumpToElement.meetsConditions(varList)) {
               id = jumpToElement.goToElement;
-              print('jumpToElement: $id');
               return updateChatStatus(
                   currentScene!.elements[id]);
             }
@@ -79,11 +77,9 @@ class ChatController {
           //get next elements id
           id = metadata.tagToIdMap[currentElement!
               .nextElementTag]; // TODO figure out why this expression returns String?
-          print('next element: $id');
           //change current element with the new one
         }
       }
-      print('next scene id: $id');
       updateChatStatus(currentScene!.elements[id]);
     }
   }
@@ -118,12 +114,15 @@ class ChatController {
     }
   }
 
-  sendAiMessage(AiSceneElement element) {
+  sendAiMessage(AiSceneElement element) async {
+    bool isFirstMessage = true;
     for (AbstractMessage message in element.messages) {
-      Future.delayed(Duration(milliseconds: 400)); //TODO: make it dynamic
+      await Future.delayed(Duration(milliseconds: isFirstMessage? 800 :4000)); //TODO: make it dynamic
       _messages.add(message);
+      isFirstMessage = false;
       notifyListeners();
     }
+    Future.delayed(const Duration(milliseconds: 1000));
     getNextElement();
   }
 

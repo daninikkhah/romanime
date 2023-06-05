@@ -26,9 +26,7 @@ class JumpToElement {
 
     for(Condition condition in conditions){
       result = result && condition.evaluateVariables(variables);
-      print('$conditions: $result');
     }
-    print('${toString()}: $result');
     return result;
   }
 
