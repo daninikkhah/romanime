@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'is_typing_message_bubble.dart';
-import 'message_bubble.dart';
+import 'message_bubble_base.dart';
 
 const double _radius = 15;
 
@@ -37,10 +37,10 @@ class _MessageBubbleWithLoadingState extends State<MessageBubbleWithLoading> {
     return AnimatedContainer(
       duration: const Duration(seconds: 5),
       child: widget.bIsMe
-          ? MessageBubble(text: widget.text, isLoading: false)
+          ? MessageBubbleBase(text: widget.text, isLoading: false)
           :
       bIsTyping? const IsTypingMessageBubble():
-      MessageBubble(text: widget.text, isLoading: false, bIsMe: false,)
+      MessageBubbleBase(text: widget.text, isLoading: false, bIsMe: false,)
 
       ,
     );

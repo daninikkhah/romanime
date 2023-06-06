@@ -128,7 +128,7 @@ class ChatController {
       isFirstMessage = false;
       notifyListeners();
     }
-    await Future.delayed(const Duration(milliseconds: 2400));
+    await Future.delayed(const Duration(milliseconds: 1200));
     getNextElement();
   }
 

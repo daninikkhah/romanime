@@ -3,8 +3,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 const double _radius = 30;
 
-class MessageBubble extends StatelessWidget {
-  const MessageBubble(
+class MessageBubbleBase extends StatelessWidget {
+  const MessageBubbleBase(
       {Key? key,
       required this.text,
       required this.isLoading,
