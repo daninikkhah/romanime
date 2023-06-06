@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../control/models/character.dart';
-import '../control/state_management/characters_list_provider.dart';
 import '../control/state_management/matched_characters_provider.dart';
-import '../widgets/message_stream.dart';
 import '../widgets/chat_options.dart';
 import '../widgets/horizontal_progress_bar.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/character_circular_avatar_image_loader.dart';
-import '../control/datasource/chat_datasource.dart';
 import '../widgets/chat_stream.dart';
 
 const Color _backgroundColor = Color(0xFFD2D2D2);
