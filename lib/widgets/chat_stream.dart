@@ -18,10 +18,11 @@ class ChatStream extends StatelessWidget {
     chatController?.initiateScene();
     final List<AbstractMessage> messages =
         chatController == null ? [] : chatController.messages;
+    print(messages);
 
     return AnimatedList(
       key: chatController?.animatedListKey,
-      initialItemCount: 0,
+      initialItemCount: messages.length,
       reverse: true,
       itemBuilder: (context, index, animation) {
         final TextMessage message = messages[index] as TextMessage;
