@@ -42,7 +42,7 @@ class LikeDislikeButton extends StatelessWidget {
           onPressed: () => LikeDislike.like(
             context: context,
             character: character,
-            matchedPopUpAlert:
+            matchedPopUpAlert: () =>
                 matchedPopUpAlert(context: context, characterId: character.id),
           ),
         ),

@@ -36,12 +36,12 @@ class DraggableCharacterCard extends StatelessWidget {
       if (draggableDetails.offset.dx > minimumDrag) {
         // Provider.of<CharactersMessagesList>(context,listen: false).addCharacters(characters[0].id);
         LikeDislike.like(
-            context: context,
-            character: currentCharacter,
-            matchedPopUpAlert:
-            matchedPopUpAlert(context: context, characterId: currentCharacter.id),);
-
-            } else if (draggableDetails.offset.dx < -minimumDrag) {
+          context: context,
+          character: currentCharacter,
+          matchedPopUpAlert: () => matchedPopUpAlert(
+              context: context, characterId: currentCharacter.id),
+        );
+      } else if (draggableDetails.offset.dx < -minimumDrag) {
         LikeDislike.dislike(context);
       }
     }
@@ -60,14 +60,12 @@ class DraggableCharacterCard extends StatelessWidget {
             character: characters[index],
           ),
         ),
-        childWhenDragging: characters.length<3?
-            Container():
-
-        CharacterCard(
-          height: _height,
-          character:
-          characters[index + 1],
-        ),
+        childWhenDragging: characters.length < 3
+            ? Container()
+            : CharacterCard(
+                height: _height,
+                character: characters[index + 1],
+              ),
         onDragEnd: (draggableDetails) => swipe(draggableDetails),
       ),
     );
