@@ -49,16 +49,8 @@ class LikeDislikeDatasource {
           if (response.statusCode == 200) {
             final decodedResponse =
             jsonDecode(response.body) as List<dynamic>;
-            for (var character in decodedResponse) {
-              Character newCharacter = Character.fromJson(
-                id: character['id'],
-                pictureAddress: character['picture_address'],
-                name: character['name'],
-                bio: character['bio'],
-                description: character['description'],
-                tags: character['tags'],
-                artistID: character['artistID'],
-              );
+            for (var characterJsonData in decodedResponse) {
+              Character newCharacter = Character.fromJson(characterJsonData);
               likedCharacters.add(newCharacter);
             }
 

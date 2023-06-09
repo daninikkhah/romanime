@@ -21,20 +21,21 @@ class Character {
     this.isPlayable = true,
   });
 
-  factory Character.fromJson({String? id, String? pictureAddress, String? name, String? bio, String? description, List<String>? tags, String? artistID}) {
+  factory Character.fromJson(Map<String,dynamic> jsonData) {
     return Character(
-      id: id?? DateTime.now().toString(),
-      pictureAddress: pictureAddress ?? 'null',
-      name: name?? 'null',
-      bio: bio?? 'null',
-      description: description?? 'null',
-      tags: tags?? [],
-      artistID: artistID?? 'null',
+      id: jsonData['id'] ?? 'null',
+      pictureAddress: jsonData['picture_address'] ?? 'null',
+      name: jsonData['name'] ?? 'null',
+      bio: jsonData['bio'] ?? 'null',
+      description: jsonData['description']?? 'null',
+      tags: jsonData['tags']?? [],
+      artistID: jsonData['artistID']?? 'null',
+      isPlayable: jsonData['has_content']?? false
     );
 
   }
   @override
-  String toString() => 'name: ' + name + ' bio : ' + bio + ' isPlayable ' + isPlayable.toString()+ ' picture address ' + pictureAddress;
+  String toString() => 'name: $name bio : $bio isPlayable $isPlayable picture address $pictureAddress';
 
 
 }

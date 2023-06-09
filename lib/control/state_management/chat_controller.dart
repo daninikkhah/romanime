@@ -11,7 +11,7 @@ import '../models/scene_element_abstract_model.dart';
 import '../models/ai_scene_element.dart';
 import '../models/scene_player_element.dart';
 import '../models/character.dart';
-import '../datasource/chat_datasource_remote.dart';
+import '../datasource/remote_chat_datasource.dart';
 
 class ChatController {
   ChatController({required this.characterId, required this.notifyListeners}) {
@@ -39,7 +39,7 @@ class ChatController {
   List<AbstractMessage> get messages => [...(_messages.reversed)];
 
   void fetchNewScene() async {
-    currentScene = await ChatDataSource.getCurrentScene(characterId);
+    currentScene = await RemoteChatDataSource.getCurrentScene(characterId);
   }
 
   void initiateScene() {

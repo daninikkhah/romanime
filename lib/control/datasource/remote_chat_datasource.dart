@@ -7,7 +7,7 @@ import '../../constants.dart';
 import '../models/variable.dart';
 import 'mock_data.dart';
 
-class ChatDataSource {
+class RemoteChatDataSource {
   static final _user = FirebaseAuth.instance.currentUser;
 
   static Future<List<Variable>?> getVarList(String characterID) async {
