@@ -34,9 +34,9 @@ class MatchedCharactersProvider with ChangeNotifier{
       _matchedCharacters.add(character);
       Provider.of<CharacterChatControllerProvider>(context,listen: false).addNewCharacter(character.id);
       notifyListeners();
-      LikeDislikeDatasource.like(character.id);
       matchedPopUpAlert();
     }
+    LikeDislikeDatasource.like(character.id);
   }
 
   void deleteCachedData(){
