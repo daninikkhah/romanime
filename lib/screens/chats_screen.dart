@@ -15,7 +15,7 @@ class ChatsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: const BoxDecoration(
