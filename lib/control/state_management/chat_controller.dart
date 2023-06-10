@@ -10,7 +10,6 @@ import '../models/player_option.dart';
 import '../models/scene_element_abstract_model.dart';
 import '../models/ai_scene_element.dart';
 import '../models/scene_player_element.dart';
-import '../models/character.dart';
 import '../datasource/remote_chat_datasource.dart';
 
 class ChatController {

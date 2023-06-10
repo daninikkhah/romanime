@@ -1,5 +1,4 @@
 import '../../constants.dart';
-import 'message.dart';
 class Message{
   Message({required this.type, required this.sender, required this.value});
   final MessageType type;

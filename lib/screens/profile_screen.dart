@@ -17,9 +17,7 @@ class ProfileScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Consumer<ProfileDataProvider>(
           builder: (context, profileData, _) {
-            print('profile_screen');
             PlayerProfileDataModel? player = profileData.player;
-            print('profile_screen: '+player.toString());
             return player == null?
                  Container(color: Colors.blue,):
               Column(
@@ -31,25 +29,25 @@ class ProfileScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Expanded(child: Container()),
-                        CircleAvatar(
+                        const CircleAvatar(
                           backgroundImage: NetworkImage(_profileUrl),
                           radius: 70,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Text(player.name,
-                          style: TextStyle(
+                         Text(player.name,
+                          style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.w900,
                               color: Colors.white),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
                           player.bio,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w300,
                               color: Colors.white70),
@@ -90,35 +88,3 @@ class ProfileScreen extends StatelessWidget {
         ));
   }
 }
-
-//Row(
-//                 children: [
-//
-//                   Padding(
-//                     padding: const EdgeInsets.only(left: 30,top: 10,bottom: 10),
-//                     child: Icon(
-//                       Icons.edit_rounded,
-//                       color: color,
-//                       size: 40,
-//                     ),
-//                   ),
-//                   Expanded(child: Container(),),
-//                   Padding(
-//                     padding: const EdgeInsets.only(top: 10,bottom: 10),
-//                     child: Text(
-//                       'Edit Profile',
-//                       style: TextStyle(fontSize: 22,fontWeight: FontWeight.w700, color: color),
-//                     ),
-//                   ),
-//                   Expanded(child: Container(),flex: 3,),
-//
-//                   Padding(
-//                     padding: const EdgeInsets.only(right: 30,top: 10,bottom: 10),
-//                     child: Icon(
-//                       Icons.arrow_forward_ios,
-//                       color: color,
-//                       size: 40,
-//                     ),
-//                   ),
-//                 ],
-//               ),

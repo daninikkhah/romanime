@@ -1,7 +1,6 @@
 import 'jump_to_element.dart';
 import 'ai_scene_element.dart';
 import 'scene_player_element.dart';
-import 'condition.dart';
 
 enum ElementType { player, ai }
 

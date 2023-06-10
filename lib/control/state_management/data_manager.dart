@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'characters_list_provider.dart';
 import '../profile_data_provider.dart';
 import 'matched_characters_provider.dart';
-import '../datasource/remote_chat_datasource.dart';
 
 class DataManager{
   static void initialise(BuildContext context){

@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:romanime/control/models/scene_model.dart';
 import '../../constants.dart';
 import '../models/variable.dart';
-import 'mock_data.dart';
 
 class RemoteChatDataSource {
   static final _user = FirebaseAuth.instance.currentUser;

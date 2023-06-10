@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import '../constants.dart';
-
 
 class Message{
   Message({required this.message,this.bIsMine = true, this.type = MessageType.text});
