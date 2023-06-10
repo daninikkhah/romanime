@@ -5,7 +5,7 @@ import 'package:romanime/control/models/var_change.dart';
 import 'package:romanime/control/models/variable.dart';
 import '../models/scene_meta_data.dart';
 import '../models/scene_model.dart';
-import '../models/abstract_message.dart';
+import '../models/message.dart';
 import '../models/player_option.dart';
 import '../models/scene_element_abstract_model.dart';
 import '../models/ai_scene_element.dart';
@@ -26,17 +26,17 @@ class ChatController {
   bool initiated = false;
   SceneModel? currentScene;
   SceneModel? nextScene;
-  List<AbstractMessage> _messages = [];
+  List<Message> _messages = [];
 
   SceneElementAbstractModel? currentElement;
   List<PlayerOption> options = [];
   PlayerOption? selectedOption;
-  Queue<AbstractMessage>? playerMessagesQueue;
-  List<AbstractMessage>? aiMessagesSendingList;
+  Queue<Message>? playerMessagesQueue;
+  List<Message>? aiMessagesSendingList;
   bool isVarChangeApplied = false;
   List<Variable> varList =[];
 
-  List<AbstractMessage> get messages => [...(_messages.reversed)];
+  List<Message> get messages => [...(_messages.reversed)];
 
   void fetchNewScene() async {
     currentScene = await RemoteChatDataSource.getCurrentScene(characterId);
@@ -122,7 +122,7 @@ class ChatController {
 
   sendAiMessage(AiSceneElement element) async {
     bool isFirstMessage = true;
-    for (AbstractMessage message in element.messages) {
+    for (Message message in element.messages) {
       await Future.delayed(Duration(milliseconds: isFirstMessage? 1200 :1800)); //TODO: make it dynamic
      _addMessage(message);
       isFirstMessage = false;
@@ -149,7 +149,7 @@ class ChatController {
     }
   }
 
-  void _addMessage(AbstractMessage message){
+  void _addMessage(Message message){
     _messages.add(message);
     animatedListKey.currentState?.insertItem(0,duration:const Duration(milliseconds: 400) );
   }

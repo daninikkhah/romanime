@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:romanime/constants.dart';
 import '../control/characters_messages_list.dart';
-import '../control/message.dart';
 import 'player_message_bubble.dart';
 import 'animated_player_message_bubble.dart';
 import 'ai_characters_message_bubble.dart';
@@ -11,8 +10,8 @@ import 'player_message_bubble_transition.dart';
 import 'ai_character_message_bubble_transition.dart';
 import '../control/state_management/character_chat_controller_provider.dart';
 import '../control/state_management/chat_controller.dart';
-import '../control/models/text_message.dart';
-import '../control/models/abstract_message.dart';
+import '../control/models/message.dart';
+
 
 
 class MessageStream extends StatefulWidget {
@@ -36,7 +35,7 @@ class _MessageStreamState extends State<MessageStream> {
             reverse: true,
             // ignore: curly_braces_in_flow_control_structures, curly_braces_in_flow_control_structures
             itemBuilder: (context, index) {
-              TextMessage message = chatController.messages[index] as TextMessage ;
+              Message message = chatController.messages[index]  ;
 
               if (index == 0) {
                 return message.sender == MessageSender.player

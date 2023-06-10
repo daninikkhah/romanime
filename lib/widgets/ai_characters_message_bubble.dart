@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
-import '../control/models/text_message.dart';
+import '../control/models/message.dart';
 
 const double _radius = 30;
 const Color _bubbleBackgroundColor = Color(0xFFE6E6E6);
@@ -12,7 +12,7 @@ class AiCharactersMessageBubble extends StatelessWidget {
     required this.message,
   }) : super(key: key);
 
-  final TextMessage message;
+  final Message message;
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +37,10 @@ class AiCharactersMessageBubble extends StatelessWidget {
                     topLeft: Radius.circular(_radius),
                     topRight: Radius.circular(_radius),
                     bottomRight: Radius.circular(_radius)),
-                      child: Image.asset(message.text),
+                      child: Image.asset(message.value),
                     )
                   : Text(
-                      message.text,
+                      message.value,
                       style: const TextStyle(
                         fontSize: 16,
                         color: _bubbleTextColor,

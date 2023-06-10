@@ -1,5 +1,5 @@
-import 'abstract_message.dart';
-import 'text_message.dart';
+import 'message.dart';
+import 'message.dart';
 import 'var_change.dart';
 import '../../constants.dart';
 
@@ -10,7 +10,7 @@ class PlayerOption {
       required this.varChaneList});
 
   final String previewText;
-  final List<AbstractMessage> messages;
+  final List<Message> messages;
   final List<VarChange>? varChaneList;
 
   factory PlayerOption.fromJson(jsonData) {
@@ -19,12 +19,12 @@ class PlayerOption {
      final List<VarChange>? varChangeList = jsonVarChangeList?.map((jsonVarChangeData) => VarChange.fromJson(jsonVarChangeData)).toList();
 
     List<dynamic> jsonMessagesList = jsonData['texts'];
-    List<AbstractMessage> messagesList = jsonMessagesList.map((jsonMessage) => AbstractMessage.formJson(jsonMessage,MessageSender.player)).toList();
+    List<Message> messagesList = jsonMessagesList.map((jsonMessage) => Message.formJson(jsonMessage,MessageSender.player)).toList();
 
     String firstMessageContent ='null'; //TODO change
     if(messagesList[0].type == MessageType.text){
-      TextMessage firstMessage = messagesList[0] as TextMessage;
-      firstMessageContent = firstMessage.text;
+      Message firstMessage = messagesList[0] as Message;
+      firstMessageContent = firstMessage.value;
     }
     else if(messagesList[0].type == MessageType.picture){
       firstMessageContent = 'send a picture';

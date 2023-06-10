@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:romanime/constants.dart';
-import '../control/models/text_message.dart';
+import '../control/models/message.dart';
 import 'player_message_bubble.dart';
 import 'ai_characters_message_bubble.dart';
 
 class AnimatedMessageBubble extends StatelessWidget {
   const AnimatedMessageBubble({required this.message, required this.animation,Key? key}) : super(key: key);
-  final TextMessage message;
+  final Message message;
   final Animation<double> animation;
 
   @override

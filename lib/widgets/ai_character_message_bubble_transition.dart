@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'ai_characters_message_bubble.dart';
-import '../control/models/text_message.dart';
+import '../control/models/message.dart';
 
 
 class AiCharactersMessageBubbleTransition extends StatefulWidget {
@@ -10,7 +10,7 @@ class AiCharactersMessageBubbleTransition extends StatefulWidget {
   }) : super(key: key);
 
   final
-  TextMessage message;
+  Message message;
 
   @override
   State<AiCharactersMessageBubbleTransition> createState() => _AiCharactersMessageBubbleTransitionState();

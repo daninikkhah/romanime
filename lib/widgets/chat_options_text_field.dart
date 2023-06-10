@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:romanime/constants.dart';
 import '../control/state_management/chat_controller.dart';
-import '../control/models/text_message.dart';
-import '../control/models/abstract_message.dart';
+import '../control/models/message.dart';
+import '../control/models/message.dart';
 
 
 const double _radius = 20;
@@ -16,11 +16,11 @@ class ChatOptionsTextField extends StatelessWidget {
   final  Function changeOptionsVisibilityState;
 
   String getSelectedMessage(){
-    AbstractMessage? selectedMessage = chatController.playerMessagesQueue?.firstOrNull;
+    Message? selectedMessage = chatController.playerMessagesQueue?.firstOrNull;
     if(selectedMessage != null) {
       if (selectedMessage.type == MessageType.text) {
-        TextMessage selectedTextMessage = selectedMessage as TextMessage;
-        return selectedTextMessage.text?? '';
+        Message selectedTextMessage = selectedMessage as Message;
+        return selectedTextMessage.value?? '';
       } //TODO: implement other message Types
     }
     return '';

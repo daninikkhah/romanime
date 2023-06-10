@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '../control/models/abstract_message.dart';
-import '../control/models/text_message.dart';
+import '../control/models/message.dart';
+import '../control/models/message.dart';
 import '../constants.dart';
 
 
@@ -17,7 +17,7 @@ class AnimatedAiCharactersMessageBubble extends StatefulWidget {
     required this.message,
   }) : super(key: key);
 
-  final TextMessage message;
+  final Message message;
 
   @override
   State<AnimatedAiCharactersMessageBubble> createState() =>
@@ -72,8 +72,8 @@ class _AnimatedAiCharactersMessageBubbleState
         child: AnimatedSize(
           //TODO dynamic animation duration
           duration: Duration(
-              milliseconds: widget.message.text.length < 30
-                  ? widget.message.text.length * 15
+              milliseconds: widget.message.value.length < 30
+                  ? widget.message.value.length * 15
                   : 250), // TODO figure out the numbers
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -91,11 +91,11 @@ class _AnimatedAiCharactersMessageBubbleState
                       topLeft: Radius.circular(_radius),
                       topRight: Radius.circular(_radius),
                       bottomRight: Radius.circular(_radius)),
-                  child: Image.asset(widget.message.text),
+                  child: Image.asset(widget.message.value),
                 )
                     :
                 Text(
-                  widget.message.text,
+                  widget.message.value,
                   style: const TextStyle(
                     fontSize: 18,
                     color: _bubbleTextColor,
