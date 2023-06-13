@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'variable.dart';
 import 'var_change.dart';
 
@@ -5,6 +6,12 @@ class Integer extends Variable {
   Integer({required super.name, this.value = 0});
 
   int value;
+
+    @override
+  String toLocalJson() {
+      Map<String,dynamic> variableMap = {'name': name, 'type': type.toString(), 'value' : value} ;
+        return json.encode(variableMap);
+    }
 
   @override
   bool isEqualTo(Variable variable) {
