@@ -1,4 +1,5 @@
 import '../../constants.dart';
+import 'dart:convert';
 
 class Message {
   Message({required this.type, required this.sender, required this.value});
@@ -10,13 +11,14 @@ class Message {
   factory Message.formJson(dynamic jsonString, MessageSender sender) =>
       Message(value: jsonString, sender: sender, type: MessageType.text);
 
-  factory Message.fromLocalMap(Map<String, String> localMapData){
+  factory Message.fromLocalJsom(String jsonData){
     // ignore: unrelated_type_equality_checks
-    MessageSender messageSender = localMapData['sender'] == MessageSender.player
+    Map<String, String> decodedJson = json.decode(jsonData);
+    MessageSender messageSender = decodedJson['sender'] == MessageSender.player
         ? MessageSender.player
         : MessageSender.ai;
     MessageType messageType;
-    switch (localMapData['type']) {
+    switch (decodedJson['type']) {
       case 'MessageType.text':
         messageType = MessageType.text;
         break;
@@ -30,11 +32,19 @@ class Message {
         messageType = MessageType.text;
     }
 
-    return Message(type: messageType, sender: messageSender, value: localMapData['value']?? 'null');
+    return Message(type: messageType, sender: messageSender, value: decodedJson['value']?? 'null');
   }
 
-  Map<String, String> toMap() =>
-      {'type': type.toString(), 'sender': sender.toString(), 'value': value};
+  String toLocalJson() {
+
+    Map<String, String> messageMap = {
+      'type': type.toString(),
+      'sender': sender.toString(),
+      'value': value
+    };
+
+    return json.encode(messageMap);
+  }
 
   @override
   String toString() =>
