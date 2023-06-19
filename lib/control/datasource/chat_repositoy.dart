@@ -1,30 +1,46 @@
+import 'dart:convert';
 import '../models/scene_model.dart';
 import '../models/message.dart';
 import 'local_chat_datasource.dart';
 import 'remote_chat_datasource.dart';
 import '../models/variable.dart';
 
+class ChatRepository {
 
-class ChatRepository{
-  ChatRepository(this.characterId);
-  final String characterId ;
-  SceneModel? scene;
-  String? currentMessageId;
-  List<Message>? sentMessages ;
+  static Future<SceneModel?> getCurrentScene(String characterId) async {
+    print('................. chat repository .......................');
+    //TODO: remove variables from Scene
+    final String? sceneJsonData =
+        await LocalChatDatasource.getSceneJsonData(characterId);
 
-  void initiate() async{
-    final String? sceneJsonData = await LocalChatDatasource.getSceneJsonData(characterId) ;
-    final List<String>? variablesJsonData = await LocalChatDatasource.getVariables(characterId);
-    List<Variable> variables = [];
-    if( variablesJsonData != null) {
-      for (String variableJsonData in variablesJsonData) {
-      }
-    }else{
 
+    if (sceneJsonData != null) {
+      final Map<String, dynamic> decodedSceneData = json.decode(sceneJsonData);
+      return SceneModel.fromJson(decodedSceneData, await ChatRepository.getVariables(characterId));
     }
-    await RemoteChatDataSource.getCurrentScene(characterId);
-    currentMessageId = await LocalChatDatasource.getCurrentMessageId(characterId);
-    sentMessages = await LocalChatDatasource.getSentMessages(characterId);
+
+    return await RemoteChatDataSource.getCurrentScene(characterId);
+
+  }
+
+  static Future<String?>  getCurrentMessageId(String characterId) async =>
+      await LocalChatDatasource.getCurrentMessageId(characterId);
+
+  static Future<List<Message>?> getMessages(String characterId) async =>
+      await LocalChatDatasource.getSentMessages(characterId);
+
+  static Future<List<Variable>?> getVariables(String characterId) async {
+    final List<String>? variablesJsonData =
+    await LocalChatDatasource.getVariables(characterId);
+    List<Variable>? variables = [];
+    if (variablesJsonData != null) {
+      for (String variableJsonData in variablesJsonData) {
+        variables.add(Variable.fromLocalJson(variableJsonData));
+      }
+    } else {
+      variables = await RemoteChatDataSource.getVarList(characterId);
+    }
+    return variables;
   }
 
 }
