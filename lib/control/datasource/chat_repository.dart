@@ -8,7 +8,6 @@ import '../models/variable.dart';
 class ChatRepository {
 
   static Future<SceneModel?> getCurrentScene(String characterId) async {
-    print('................. chat repository .......................');
     //TODO: remove variables from Scene
     final String? sceneJsonData =
         await LocalChatDatasource.getSceneJsonData(characterId);
@@ -16,7 +15,7 @@ class ChatRepository {
 
     if (sceneJsonData != null) {
       final Map<String, dynamic> decodedSceneData = json.decode(sceneJsonData);
-      return SceneModel.fromJson(decodedSceneData, await ChatRepository.getVariables(characterId));
+      return SceneModel.fromJson(decodedSceneData, await getVariables(characterId));
     }
 
     return await RemoteChatDataSource.getCurrentScene(characterId);
@@ -28,6 +27,11 @@ class ChatRepository {
 
   static Future<List<Message>?> getMessages(String characterId) async =>
       await LocalChatDatasource.getSentMessages(characterId);
+
+   static void saveMessages(String characterId,List<Message> messages) {
+     List<String> jsonMessages = messages.map((message) => message.toLocalJson()).toList();
+         LocalChatDatasource.saveSentMessages(characterId, jsonMessages);
+   }
 
   static Future<List<Variable>?> getVariables(String characterId) async {
     final List<String>? variablesJsonData =

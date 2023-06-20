@@ -11,7 +11,7 @@ import '../models/scene_element_abstract_model.dart';
 import '../models/ai_scene_element.dart';
 import '../models/scene_player_element.dart';
 import '../datasource/remote_chat_datasource.dart';
-import '../datasource/chat_repositoy.dart';
+import '../datasource/chat_repository.dart';
 
 class ChatController {
   ChatController({required this.characterId, required this.notifyListeners}) {

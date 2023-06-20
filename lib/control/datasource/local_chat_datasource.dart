@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:html';
+
 import '../models/scene_model.dart';
 import '../models/message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,7 +9,7 @@ class LocalChatDatasource{
   SceneModel? scene;
   String? currentMessageId;
   List<Message> sentMessages = [];
-  //TODO: use device memory
+
   static void saveScene(String characterId, String sceneJson)async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('sceneJsonData$characterId', sceneJson);
@@ -18,6 +21,7 @@ class LocalChatDatasource{
 
   static void saveVariables(String characterId, String sceneJson)async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+
 
   }
   static Future<List<String>?> getVariables(String characterId)async{
@@ -34,7 +38,10 @@ class LocalChatDatasource{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
   }
-  static void saveSentMessages(String characterId)async{}
+  static void saveSentMessages(String characterId, List<String> jsonMessages)async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList(characterId, jsonMessages);
+  }
   static void addMessage(String characterId)async{}
   static Future<List<Message>?> getSentMessages(String characterId)async{}
 }
