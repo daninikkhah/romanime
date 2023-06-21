@@ -12,22 +12,29 @@ class ChatStream extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ChatController? chatController =
-        Provider.of<CharacterChatControllerProvider>(context)
-            .chatControllers[id];
-    chatController?.initiateScene();
-    final List<Message> messages =
-        chatController == null ? [] : chatController.messages;
-    print(messages);
+   // final ChatController? chatControllerInstance = Provider.of<CharacterChatControllerProvider>(context,listen: false).chatControllers[id];
+   // chatControllerInstance?.initiateScene();
 
-    return AnimatedList(
-      key: chatController?.animatedListKey,
-      initialItemCount: messages.length,
-      reverse: true,
-      itemBuilder: (context, index, animation) {
-        final Message message = messages[index] as Message;
-        return AnimatedMessageBubble(message: message, animation: animation);
-      },
-    );
+   // print('......................');
+   //    print('chat controller: $chatControllerInstance');
+   return Consumer<CharacterChatControllerProvider>(builder:
+       (context,chatControllerProvider,_) {
+         final ChatController? chatController =
+     chatControllerProvider.chatControllers[id];
+
+         final List<Message> messages =
+     chatController == null ? [] : chatController.messages;
+     print(messages);
+     return AnimatedList(
+       key: chatController?.animatedListKey,
+       initialItemCount: messages.length,
+       reverse: true,
+       itemBuilder: (context, index, animation) {
+         final Message message = messages[index] ;
+         return AnimatedMessageBubble(message: message, animation: animation);
+       },
+     );
+   });
+
   }
 }

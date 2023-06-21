@@ -12,7 +12,6 @@ class ChatRepository {
     final String? sceneJsonData =
         await LocalChatDatasource.getSceneJsonData(characterId);
 
-
     if (sceneJsonData != null) {
       final Map<String, dynamic> decodedSceneData = json.decode(sceneJsonData);
       return SceneModel.fromJson(decodedSceneData, await getVariables(characterId));
@@ -21,12 +20,19 @@ class ChatRepository {
     return await RemoteChatDataSource.getCurrentScene(characterId);
 
   }
+  // current scene is saved whenever it is fetched in the remoteDatasource
 
-  static Future<String?>  getCurrentMessageId(String characterId) async =>
-      await LocalChatDatasource.getCurrentMessageId(characterId);
+  static Future<String?> getCurrentElementId(String characterId) async =>
+      await LocalChatDatasource.getCurrentElementId(characterId);
 
-  static Future<List<Message>?> getMessages(String characterId) async =>
-      await LocalChatDatasource.getSentMessages(characterId);
+  static void setCurrentElementId(String characterId, String elementId) =>
+  LocalChatDatasource.saveCurrentElementId(characterId, elementId);
+
+  static Future<List<Message>?> getMessages(String characterId) async
+  {
+  List<String>? jsonMessages = await LocalChatDatasource.getSentMessages(characterId);
+  return jsonMessages?.map((jsonMessage) => Message.fromLocalJsom(jsonMessage)).toList();
+}
 
    static void saveMessages(String characterId,List<Message> messages) {
      List<String> jsonMessages = messages.map((message) => message.toLocalJson()).toList();
@@ -45,6 +51,11 @@ class ChatRepository {
       variables = await RemoteChatDataSource.getVarList(characterId);
     }
     return variables;
+  }
+
+  static void saveVariables(String characterId, List<Variable> variables){
+     List<String> jsonVariables = variables.map((variable) => variable.toLocalJson()).toList();
+     LocalChatDatasource.saveVariables(characterId: characterId, jsonVariables: jsonVariables);
   }
 
 }

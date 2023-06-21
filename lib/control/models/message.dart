@@ -13,8 +13,8 @@ class Message {
 
   factory Message.fromLocalJsom(String jsonData){
     // ignore: unrelated_type_equality_checks
-    Map<String, String> decodedJson = json.decode(jsonData);
-    MessageSender messageSender = decodedJson['sender'] == MessageSender.player
+    Map<String, dynamic> decodedJson = json.decode(jsonData) ;
+    MessageSender messageSender = decodedJson['sender'] == 'MessageSender.player'
         ? MessageSender.player
         : MessageSender.ai;
     MessageType messageType;

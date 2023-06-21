@@ -1,8 +1,8 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'dart:developer';
-import 'package:romanime/control/models/var_change.dart';
-import 'package:romanime/control/models/variable.dart';
+import '../models/var_change.dart';
+import '../models/variable.dart';
 import '../models/scene_meta_data.dart';
 import '../models/scene_model.dart';
 import '../models/message.dart';
@@ -25,7 +25,6 @@ class ChatController {
 
   bool initiated = false;
   SceneModel? currentScene;
-  SceneModel? nextScene;
   List<Message> _messages = [];
 
   SceneElementAbstractModel? currentElement;
@@ -34,33 +33,59 @@ class ChatController {
   Queue<Message>? playerMessagesQueue;
   List<Message>? aiMessagesSendingList;
   bool isVarChangeApplied = false;
-  List<Variable> varList =[];
+  List<Variable> varList = [];
+  String? currentSavedElementId;
 
-  List<Message> get messages => [...(_messages.reversed)];
+  List<Message> get messages {
+    final output = [...(_messages.reversed)];
+    // print('messages: $_messages');
+    // print('................................');
+    // print('output: $output');
+    return output;
+  }
 
   void fetchNewScene() async {
     currentScene = await ChatRepository.getCurrentScene(characterId);
+    currentSavedElementId = await ChatRepository.getCurrentElementId(characterId);
+    varList = await  ChatRepository.getVariables(characterId)?? [];
+    _messages = await ChatRepository.getMessages(characterId)?? [];
   }
 
-  void initiateScene() {
+  Future<void> initiateScene() async {
     //must be called when initializing the chat
     // probably in the characterChatScreen or it's children, like chatStream
    if(!initiated) {
+     print('started initiating');
       if (currentScene != null) {
         String? id;
+
+        // print('//////////////////////////////////////');
+        // print('varList: $varList');
+        // print('messages: $_messages');
+        // print('current element id: $currentSavedElementId');
+        // print('//////////////////////////////////////');
+
         SceneMetaData metadata = currentScene!.metadata;
         varList = metadata.variables;
-        if (metadata.currentElementId == null) {
-          // get the first element
-          id = metadata.tagToIdMap[metadata.initialId] ?? '0';
-        } else {
-          // get saved element
-          id = metadata.tagToIdMap[metadata.currentElementId] ?? '0';
+
+        if(currentSavedElementId == null){
+          if (metadata.currentElementId == null) {
+            // get the first element
+            id = metadata.tagToIdMap[metadata.initialId] ?? '0';
+          } else {
+            // get saved element
+            id = metadata.tagToIdMap[metadata.currentElementId] ?? '0';
+          }
+        }
+        else{
+          id = currentSavedElementId;
         }
         updateChatStatus(currentScene!.elements[id]);
       }
       initiated = true;
-    }
+     print(' initiated');
+
+   }
   }
 
   void getNextElement() {
@@ -97,6 +122,9 @@ class ChatController {
       element.elementType == ElementType.player
           ? updateOptions(element as ScenePlayerElement)
           : sendAiMessage(element as AiSceneElement);
+    }
+    if(element != null) {
+      saveCurrentElement(element.id); //TODO: check if it is in a good place
     }
     //notifyListeners(); //TODO: check if needed
   }
@@ -154,5 +182,9 @@ class ChatController {
     animatedListKey.currentState?.insertItem(0,duration:const Duration(milliseconds: 400) );
   }
 
-  void saveCurrentElement() {}
+  void saveCurrentElement(String currentElementId) {
+    ChatRepository.saveVariables( characterId, varList);
+    ChatRepository.saveMessages(characterId, _messages);
+    ChatRepository.setCurrentElementId(characterId, currentElementId);
+  }
 }

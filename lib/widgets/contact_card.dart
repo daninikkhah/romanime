@@ -7,6 +7,7 @@ import '../screens/character_chat_screen.dart';
 import '../control/characters_messages_list.dart';
 import 'character_circular_avatar_image_loader.dart';
 import '../control/state_management/matched_characters_provider.dart';
+import '../control/state_management/character_chat_controller_provider.dart';
 
 class ContactCard extends StatelessWidget {
   const ContactCard(this.index, {Key? key}) : super(key: key);
@@ -15,20 +16,22 @@ class ContactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Message> _messages =
-        Provider.of<CharactersMessagesList>(context, listen: false)
-            .getMessages(index);
+
     return Consumer<MatchedCharactersProvider>(builder: (context, characters, _) {
-      final double _width = MediaQuery.of(context).size.width;
+      final double width = MediaQuery.of(context).size.width;
       Character character = characters.matchedCharacters[index];
 
       return GestureDetector(
-        onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => CharacterChatScreen(
-                      id: character.id,
-                    ))),
+        onTap: () {
+              Provider.of<CharacterChatControllerProvider>(context,listen: false).chatControllers[character.id]?.initiateScene();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          CharacterChatScreen(
+                            id: character.id,
+                          )));
+        },
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           decoration: BoxDecoration(
@@ -38,7 +41,7 @@ class ContactCard extends StatelessWidget {
             child: Row(
               children: [
                 SizedBox(
-                  width: _width - 70,
+                  width: width - 70,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -54,7 +57,7 @@ class ContactCard extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 0, horizontal: 10),
                             child: SizedBox(
-                              width: _width - 210,
+                              width: width - 210,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
