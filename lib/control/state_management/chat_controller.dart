@@ -15,7 +15,7 @@ import '../datasource/chat_repository.dart';
 
 class ChatController {
   ChatController({required this.characterId, required this.notifyListeners}) {
-    fetchNewScene();
+    // fetchNewScene();
   }
 
   final String characterId;
@@ -44,7 +44,7 @@ class ChatController {
     return output;
   }
 
-  void fetchNewScene() async {
+  Future<void> fetchNewScene() async {
     currentScene = await ChatRepository.getCurrentScene(characterId);
     currentSavedElementId = await ChatRepository.getCurrentElementId(characterId);
     varList = await  ChatRepository.getVariables(characterId)?? [];

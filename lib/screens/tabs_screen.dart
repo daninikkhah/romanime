@@ -25,71 +25,89 @@ class TabsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TabsController.initiate(context);
-    final TabsController tabsController = Provider.of<TabsController>(context);
-    void _selectTab(int index) {
-      // tabsController.setSelectedTAbIndex(index);
-      tabsController.setSelectedWidget(_tabs[index], index: index);
-    }
+    // final TabsController tabsController = Provider.of<TabsController>(context);
 
-    return Scaffold(
-      extendBody: true,
-      extendBodyBehindAppBar: true,
-      backgroundColor: _backgroundColor,
-      body: tabsController.selectedWidget,
-      bottomNavigationBar: ClipRRect(
-        borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-        child: Theme(
-          data: Theme.of(context)
-              .copyWith(canvasColor: Colors.white),
-          child: BottomNavigationBar(
-            backgroundColor: Colors.transparent,
-            unselectedItemColor: _darkPrimaryColor,
-            selectedItemColor: _primaryAccent,
-            type: BottomNavigationBarType.shifting,
-            currentIndex: tabsController.selectedTAbIndex,
-            onTap: _selectTab,
-            items: const [
-              BottomNavigationBarItem(
-                  icon: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.chat_rounded,
-                      size: _iconSize,
+
+    return FutureBuilder(
+      future: TabsController.initiate(context),
+      builder: (context,initiator){
+        if(initiator.connectionState == ConnectionState.done)
+          {
+            return  Consumer<TabsController>(builder: (context,tabsController,_){
+              void _selectTab(int index) {
+                // tabsController.setSelectedTAbIndex(index);
+                tabsController.setSelectedWidget(_tabs[index], index: index);
+              }
+              return Scaffold(
+                extendBody: true,
+                extendBodyBehindAppBar: true,
+                backgroundColor: _backgroundColor,
+                body: tabsController.selectedWidget,
+                bottomNavigationBar: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+                  child: Theme(
+                    data: Theme.of(context)
+                        .copyWith(canvasColor: Colors.white),
+                    child: BottomNavigationBar(
+                      backgroundColor: Colors.transparent,
+                      unselectedItemColor: _darkPrimaryColor,
+                      selectedItemColor: _primaryAccent,
+                      type: BottomNavigationBarType.shifting,
+                      currentIndex: tabsController.selectedTAbIndex,
+                      onTap: _selectTab,
+                      items: const [
+                        BottomNavigationBarItem(
+                            icon: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.chat_rounded,
+                                size: _iconSize,
+                              ),
+                            ),
+                            label: 'matches'),
+                        BottomNavigationBarItem(
+                            icon: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.whatshot_rounded,
+                                size: _iconSize,
+                              ),
+                            ),
+                            label: 'batch'),
+                        BottomNavigationBarItem(
+                            icon: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.account_circle,
+                                size: _iconSize,
+                              ),
+                            ),
+                            label: 'chats'),
+                        // BottomNavigationBarItem(
+                        //     icon: Padding(
+                        //       padding: EdgeInsets.all(8.0),
+                        //       child: Icon(
+                        //         Icons.people,
+                        //         size: _iconSize,
+                        //       ),
+                        //     ),
+                        //     label: 'artists'),
+                      ],
                     ),
                   ),
-                  label: 'matches'),
-              BottomNavigationBarItem(
-                  icon: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.whatshot_rounded,
-                      size: _iconSize,
-                    ),
-                  ),
-                  label: 'batch'),
-              BottomNavigationBarItem(
-                  icon: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.account_circle,
-                      size: _iconSize,
-                    ),
-                  ),
-                  label: 'chats'),
-              // BottomNavigationBarItem(
-              //     icon: Padding(
-              //       padding: EdgeInsets.all(8.0),
-              //       child: Icon(
-              //         Icons.people,
-              //         size: _iconSize,
-              //       ),
-              //     ),
-              //     label: 'artists'),
-            ],
-          ),
-        ),
-      ),
+                ),
+              );
+            });
+
+
+
+          }else{
+          return Scaffold(
+            body: Column(children: [Expanded(child: Container(color: Colors.amber,))],),
+          );
+        }
+      },
     );
   }
 }

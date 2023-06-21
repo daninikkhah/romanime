@@ -6,10 +6,10 @@ class TabsController with ChangeNotifier{
   Widget _selectedWidget = const HomeScreen();
   int _selectedTabIndex = 1;
   static bool initiated = false;
-  static void initiate(BuildContext context){
+  static Future<void> initiate(BuildContext context) async{
 
     if(!initiated) {
-      DataManager.initialise(context);
+      await DataManager.initialise(context);
       initiated = true;
     }
   }

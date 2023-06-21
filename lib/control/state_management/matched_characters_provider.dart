@@ -12,13 +12,16 @@ class MatchedCharactersProvider with ChangeNotifier{
 
   List<Character> get matchedCharacters => _matchedCharacters;
 
-  void fetchMatchedCharacters(BuildContext context) async{
+  Future<void> fetchMatchedCharacters(BuildContext context) async{
     List<Character> matchedCharacters = await LikeDislikeDatasource.fetchLikedCharacters();
     _matchedCharacters.addAll(matchedCharacters) ;
-    matchedCharacters.forEach((character) {
-      Provider.of<CharactersPictureProvider>(context,listen: false).downloadImage(character);
-      Provider.of<CharacterChatControllerProvider>(context,listen: false).addNewCharacter(character.id);
-    });
+    for (var character in matchedCharacters) {
+      await Future.wait([
+      Provider.of<CharacterChatControllerProvider>(context,listen: false).addNewCharacter(character.id),
+      Provider.of<CharactersPictureProvider>(context,listen: false).downloadImage(character)
+    ]);
+
+    }
     // TODO: fetch the pictures
     notifyListeners();
   }
