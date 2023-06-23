@@ -5,22 +5,25 @@ import '../control/state_management/chat_controller.dart';
 import '../control/models/message.dart';
 import '../control/models/message.dart';
 
-
 const double _radius = 20;
 const Color _primaryColor = Color(0xFFA129FF);
 const Color _primaryTextColor = _primaryColor;
 
 class ChatOptionsTextField extends StatelessWidget {
-   ChatOptionsTextField({Key? key, required this.chatController, required this.changeOptionsVisibilityState}) : super(key: key);
+  ChatOptionsTextField(
+      {Key? key,
+      required this.chatController,
+      required this.changeOptionsVisibilityState})
+      : super(key: key);
   final ChatController chatController;
-  final  Function changeOptionsVisibilityState;
+  final Function changeOptionsVisibilityState;
 
-  String getSelectedMessage(){
+  String getSelectedMessage() {
     Message? selectedMessage = chatController.playerMessagesQueue?.firstOrNull;
-    if(selectedMessage != null) {
+    if (selectedMessage != null) {
       if (selectedMessage.type == MessageType.text) {
         Message selectedTextMessage = selectedMessage as Message;
-        return selectedTextMessage.value?? '';
+        return selectedTextMessage.value ?? '';
       } //TODO: implement other message Types
     }
     return '';
@@ -28,22 +31,21 @@ class ChatOptionsTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String selectedMessage=  getSelectedMessage();
+    String selectedMessage = getSelectedMessage();
     return Padding(
-      padding:
-      const EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 5),
+      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 5),
       child: ElevatedButton(
           style: ButtonStyle(
               shape: MaterialStateProperty.all<OutlinedBorder>(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(_radius))),
-              backgroundColor:
-              MaterialStateProperty.all<Color>(Colors.white),
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
               padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                   const EdgeInsets.all(5))),
           onPressed: chatController.options.isEmpty
               ? null
-              :()=> changeOptionsVisibilityState(), //TODO: check if it works **********
+              : () => changeOptionsVisibilityState(),
+          //TODO: check if it works **********
 
           child: Row(
             children: [
@@ -55,30 +57,37 @@ class ChatOptionsTextField extends StatelessWidget {
               Expanded(
                 child: selectedMessage == ''
                     ? const Text('select a message',
-                    style: TextStyle(
-                        fontSize: 22,
-                        color: _primaryTextColor,
-                        fontWeight: FontWeight.w700))
-                    : AnimatedTextKit(
-                  key: ValueKey<String>(selectedMessage),
-                  animatedTexts: [
-                    TyperAnimatedText(selectedMessage,
-                        textStyle: const TextStyle(
+                        style: TextStyle(
                             fontSize: 22,
                             color: _primaryTextColor,
-                            fontWeight: FontWeight.w700),
-                        speed: const Duration(milliseconds: 80))
-                  ],
-                  isRepeatingAnimation: false,
-                  displayFullTextOnTap: true, //TODO ask the ux team
-                ),
+                            fontWeight: FontWeight.w700))
+                    : AnimatedTextKit(
+                        key: ValueKey<String>(selectedMessage),
+                        animatedTexts: [
+                          TyperAnimatedText(selectedMessage,
+                              textStyle: const TextStyle(
+                                  fontSize: 22,
+                                  color: _primaryTextColor,
+                                  fontWeight: FontWeight.w700),
+                              speed: const Duration(milliseconds: 80))
+                        ],
+                        isRepeatingAnimation: false,
+                        displayFullTextOnTap: true, //TODO ask the ux team
+                      ),
               ),
               // send icon
               IconButton(
-                  icon: const Icon(Icons.send,
-                      size: 30, color: _primaryColor),
+                  icon: Icon(Icons.send,
+                      size: 30,
+                      color: chatController.playerMessagesQueue != null &&
+                              chatController.playerMessagesQueue!.isNotEmpty
+                          ? _primaryColor
+                          : Colors.grey),
                   iconSize: 30,
-                  onPressed: chatController.sendPlayerMessage)
+                  onPressed: chatController.playerMessagesQueue != null &&
+                          chatController.playerMessagesQueue!.isNotEmpty
+                      ? chatController.sendPlayerMessage
+                      : null) //
             ],
           )),
     );
