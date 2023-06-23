@@ -47,10 +47,11 @@ class ChatController {
     varList = await ChatRepository.getVariables(characterId) ?? [];
     _messages = await ChatRepository.getMessages(characterId) ?? [];
     // notifyListeners;
+    animatedListKey.currentState?.insertAllItems(0, messages.length);
     if(triedInitiating && !initiated) initiateScene();
   }
 
-  Future<void> initiateScene() async {
+  void initiateScene()  {
     //must be called when initializing the chat
     // probably in the characterChatScreen or it's children, like chatStream
     if (!initiated) {
