@@ -9,8 +9,8 @@ class TabsController with ChangeNotifier{
   static Future<void> initiate(BuildContext context) async{
 
     if(!initiated) {
-      await DataManager.initialise(context);
       initiated = true;
+      await DataManager.initialise(context);
     }
   }
 

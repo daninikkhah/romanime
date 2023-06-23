@@ -22,17 +22,13 @@ class MatchedCharactersProvider with ChangeNotifier{
     ]);
 
     }
-    // TODO: fetch the pictures
     notifyListeners();
   }
 
 
 
   void like({required BuildContext context,required Character character, required Function matchedPopUpAlert}) async {
-    print('////////////////////////');
-    print(character);
     if (character.isPlayable) {
-      print('is playable: ${character.isPlayable}');
       // todo: check if character is already liked
       _matchedCharacters.add(character);
       Provider.of<CharacterChatControllerProvider>(context,listen: false).addNewCharacter(character.id);
