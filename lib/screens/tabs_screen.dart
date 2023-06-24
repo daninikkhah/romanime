@@ -4,6 +4,7 @@ import 'chats_screen.dart';
 import 'profile_screen.dart';
 import 'package:provider/provider.dart';
 import '../control/tabs_controller.dart';
+import 'loading_screen.dart';
 
 const double _iconSize = 40;
 const Color _darkPrimaryColor = Color(0xFF520078);
@@ -109,9 +110,7 @@ class _TabsScreenState extends State<TabsScreen> {
 
 
           }else{
-          return Scaffold(
-            body: Column(children: [Expanded(child: Container(color: Colors.amber,))],),
-          );
+          return const LoadingScreen();
         }
       },
     );
