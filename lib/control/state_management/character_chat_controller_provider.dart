@@ -9,7 +9,7 @@ class CharacterChatControllerProvider with ChangeNotifier{
   Future<void> addNewCharacter(String characterId) async{
     ChatController chatController = ChatController(characterId: characterId, notifyListeners: notifyListeners);
     chatControllers.putIfAbsent(characterId, () => chatController);
-    await chatController.fetchNewScene();
+    await chatController.initiate();
     notifyListeners();
   }
 

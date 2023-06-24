@@ -10,8 +10,8 @@ import '../models/player_option.dart';
 import '../models/scene_element_abstract_model.dart';
 import '../models/ai_scene_element.dart';
 import '../models/scene_player_element.dart';
-import '../datasource/remote_chat_datasource.dart';
 import '../datasource/chat_repository.dart';
+
 
 class ChatController {
   ChatController({required this.characterId, required this.notifyListeners}) {
@@ -39,6 +39,11 @@ class ChatController {
   String? currentSavedElementId;
 
   List<Message> get messages => [...(_messages.reversed)];
+
+  Future<void> initiate() async{
+     loadingStatus = fetchNewScene();
+     await loadingStatus;
+  }
 
   Future<void> fetchNewScene() async {
     currentScene = await ChatRepository.getCurrentScene(characterId);
