@@ -19,7 +19,6 @@ import 'state_management/data_manager.dart';
    }
 
    Future<void> signOut(BuildContext context) async {
-     TabsController.initiated = false;
      player = null;
      DataManager.deleteCachedDataBuild(context);
      //TODO wipe all data in memory?? || restart all initiators

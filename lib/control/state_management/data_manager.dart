@@ -12,7 +12,6 @@ class DataManager{
     Provider.of<ProfileDataProvider>(context, listen: false).initialize(),
     Provider.of<MatchedCharactersProvider>(context, listen: false).fetchMatchedCharacters(context),
     ]);
-
   }
 
   static void deleteCachedDataBuild(BuildContext context){

@@ -10,34 +10,40 @@ const Color _darkPrimaryColor = Color(0xFF520078);
 const Color _primaryAccent = Color(0xFFAD00FF);
 const Color _backgroundColor= Color(0xFFD2D2D2);
 
-class TabsScreen extends StatelessWidget {
+class TabsScreen extends StatefulWidget {
   static const String route = 'screens/tabs_screen';
 
+
+  const TabsScreen({Key? key}) : super(key: key);
+
+  @override
+  State<TabsScreen> createState() => _TabsScreenState();
+}
+
+class _TabsScreenState extends State<TabsScreen> {
   final  List<Widget> _tabs = const [
      ChatsScreen(),
      HomeScreen(),
      ProfileScreen(),
     // ArtistsScreen()
   ];
+  Future? initiationStatus;
 
-  const TabsScreen({Key? key}) : super(key: key);
+  @override
+  void initState() {
+    // TODO: implement initState
+    initiationStatus = TabsController.initiate(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    TabsController.initiate(context);
-    // final TabsController tabsController = Provider.of<TabsController>(context);
-
-
-    return FutureBuilder(
-      future: TabsController.initiate(context),
+    return  FutureBuilder(
+      future: initiationStatus,
       builder: (context,initiator){
         if(initiator.connectionState == ConnectionState.done)
           {
             return  Consumer<TabsController>(builder: (context,tabsController,_){
-              void _selectTab(int index) {
-                // tabsController.setSelectedTAbIndex(index);
-                tabsController.setSelectedWidget(_tabs[index], index: index);
-              }
               return Scaffold(
                 extendBody: true,
                 extendBodyBehindAppBar: true,
@@ -55,7 +61,7 @@ class TabsScreen extends StatelessWidget {
                       selectedItemColor: _primaryAccent,
                       type: BottomNavigationBarType.shifting,
                       currentIndex: tabsController.selectedTAbIndex,
-                      onTap: _selectTab,
+                      onTap: (index) =>  tabsController.setSelectedWidget(_tabs[index], index: index),
                       items: const [
                         BottomNavigationBarItem(
                             icon: Padding(
