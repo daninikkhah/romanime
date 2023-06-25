@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../screens/character_chat_screen.dart';
+import 'package:provider/provider.dart';
+import '../control/state_management/character_chat_controller_provider.dart';
 
 
 
@@ -15,6 +17,7 @@ import '../screens/character_chat_screen.dart';
                   child: const Text('continue browsing')),
               ElevatedButton(
                   onPressed: () {
+                    Provider.of<CharacterChatControllerProvider>(context,listen: false).chatControllers[characterId]?.initiateScene();
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
