@@ -16,7 +16,7 @@ class CharactersListProvider with ChangeNotifier {
   Future<void> getNewCharacters(BuildContext context) async {
     List<Character>? newCharacters =
     await CharactersListDatasource.getCharactersList();
-    notifyListeners();
+     // TODO: why is this here?!
     if (newCharacters != null) {
       //TODO we should probably try to get characters again ?
       _characters.addAll(newCharacters);
@@ -24,6 +24,7 @@ class CharactersListProvider with ChangeNotifier {
         Provider.of<CharactersPictureProvider>(context, listen: false)
             .downloadImage(character);
       });
+      notifyListeners();
     }
   }
 

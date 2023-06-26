@@ -18,13 +18,9 @@ class CharacterImageLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<CharactersPictureProvider>(
-      builder: (context,imageProvider,_) =>
-          FutureBuilder(
-            future: imageProvider.getImage(characterId),
-            builder: (context,image)
-            {
-              if(image.connectionState == ConnectionState.done) {
-                final Uint8List? imageData = image.data as Uint8List?;
+      builder: (context,imageProvider,_) 
+          {
+                final Uint8List? imageData = imageProvider.getImage(characterId);
                 return imageData != null?
                 Image.memory(
                   imageData,
@@ -34,10 +30,9 @@ class CharacterImageLoader extends StatelessWidget {
                 ):
                 const Center(child: CircularProgressIndicator());//TODO: replace with a placeholder image
 
-              }
-              return const Center(child: CircularProgressIndicator());//TODO: replace with a placeholder image
+    
             },
-          ),
+          
 
     );
   }

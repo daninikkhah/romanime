@@ -21,8 +21,8 @@ class MatchedCharactersProvider with ChangeNotifier {
             .addNewCharacter(character.id),
         Provider.of<CharactersPictureProvider>(context, listen: false)
             .downloadImage(character),
-        Provider.of<CharactersPictureProvider>(context, listen: false)
-            .downloadImage(character),
+        // Provider.of<CharactersPictureProvider>(context, listen: false)
+        //     .downloadImage(character),
       ]);
     }
     notifyListeners();

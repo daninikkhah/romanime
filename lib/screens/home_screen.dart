@@ -72,21 +72,17 @@ class HomeScreen extends StatelessWidget {
               } else {
                 return Consumer<CharactersPictureProvider>(
                   builder: (context, pictureProvider,_) {
-                    Future<Uint8List?>? image =  pictureProvider.getImage(characters[0].id);
-                    return FutureBuilder(
-                      future: image,
-                      builder: (context, imageData) {
-                        if (imageData.connectionState == ConnectionState.done && imageData.data != null) {
-                        return Image.memory(
-                        imageData.data as Uint8List,
+                    Uint8List? image =  pictureProvider.getImage(characters[0].id);
+                    if (image != null) {
+                      return Image.memory(
+                       image as Uint8List,
                         height: height,
                         width: width,
                         fit: BoxFit.cover,
                       );
-                        }
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                    );
+                    }
+                    return const Center(child: CircularProgressIndicator());
+
                   }
                 );
               }
