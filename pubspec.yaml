@@ -46,6 +46,13 @@ dependencies:
   shared_preferences: ^2.1.0
   flutter_launcher_icons: ^0.13.1
 
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "lib/assets/romanime_logo.png"
+  adaptive_icon_background: "#000000"
+  adaptive_icon_foreground: "lib/assets/logo_foreground.png"
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
