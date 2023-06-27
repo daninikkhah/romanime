@@ -10,7 +10,7 @@ class RemoteChatDataSource {
   static final _user = FirebaseAuth.instance.currentUser;
 
   static Future<List<Variable>?> getVarList(String characterID) async {
-    List<Variable> varList = [];
+    List<Variable>? varList;
     if (_user == null) {
       return null;
     }
@@ -25,15 +25,16 @@ class RemoteChatDataSource {
     );
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
-      print('chatDatasource error: ' + response.reasonPhrase.toString());
+      print('chatDatasource getVarList error: ' + response.reasonPhrase.toString());
       print(response.body);
 
       //TODO: throw exception
     } else {
       final decodedJsonData = json.decode(response.body);
       Map<String, dynamic> variableMap = decodedJsonData['var_list'];
+      varList = [];
       variableMap.forEach((key, value) =>
-          varList.add(Variable.fromJson(name: key, type: 'int', value: value)));
+          varList?.add(Variable.fromJson(name: key, type: 'int', value: value)));
     }
 
     // log(varList.toString());
@@ -50,9 +51,7 @@ class RemoteChatDataSource {
 
     final String token = await _user!.getIdToken();
     final List<Variable>? varList = await getVarList(characterID);
-    if (varList == null) {
-      return null;
-    }
+
     final response = await http.post(
       Uri.parse(firebaseUrl + 'get_current_scene'),
       headers: {
@@ -62,7 +61,7 @@ class RemoteChatDataSource {
       body: json.encode({"character_id": characterID}),
     );
     if (response.statusCode < 200 || response.statusCode >= 300) {
-      print('chatDatasource error: ' + response.reasonPhrase.toString());
+      print('chatDatasource getCurrentScene error: ' + response.reasonPhrase.toString());
       print(response.body);
 
       //TODO: throw exception
