@@ -25,7 +25,7 @@ class ChatController {
 
   bool initiated = false;
   bool triedInitiating =false;
-  Future? loadingStatus;
+  Future<bool>? loadingStatus;
   SceneModel? currentScene;
   List<Message> _messages = [];
 
@@ -45,18 +45,21 @@ class ChatController {
      await loadingStatus;
   }
 
-  Future<void> fetchNewScene() async {
+  Future<bool> fetchNewScene() async {
     currentScene = await ChatRepository.getCurrentScene(characterId);
     currentSavedElementId =
         await ChatRepository.getCurrentElementId(characterId);
-    varList = await ChatRepository.getVariables(characterId) ?? [];
+    List<Variable>? varListRepo = await ChatRepository.getVariables(characterId);
+    varList = varListRepo ?? [];
     _messages = await ChatRepository.getMessages(characterId) ?? [];
     // notifyListeners;
     animatedListKey.currentState?.insertAllItems(0, messages.length);
     if(triedInitiating && !initiated) initiateScene();
+    return true;
   }
 
-  void initiateScene()  {
+  void initiateScene() async {
+    await loadingStatus;
     //must be called when initializing the chat
     // probably in the characterChatScreen or it's children, like chatStream
     if (!initiated) {
@@ -64,7 +67,6 @@ class ChatController {
         String? id;
 
         SceneMetaData metadata = currentScene!.metadata;
-        varList = metadata.variables;
 
         if (currentSavedElementId == null) {
           if (metadata.currentElementId == null) {
@@ -130,6 +132,7 @@ class ChatController {
   }
 
   sendPlayerMessage() {
+    // log(currentScene.toString());
     if (playerMessagesQueue != null && playerMessagesQueue!.isNotEmpty) {
       if (!isVarChangeApplied) applyVarChange(selectedOption?.varChaneList);
       options = [];
@@ -164,6 +167,7 @@ class ChatController {
   void applyVarChange(List<VarChange>? varChangeList) {
     if (varChangeList != null) {
       for (var varChange in varChangeList) {
+
         Variable variable = varList
             .firstWhere((variable) => variable.name == varChange.variableName);
         variable.applyVarChange(varChange);
